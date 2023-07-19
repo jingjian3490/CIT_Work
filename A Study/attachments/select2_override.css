@@ -1,0 +1,16 @@
+.select2-container {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+.select2-container .selection .select2-selection {
+	background-color: #fff;
+	border-radius: 3px;
+  border: 1px solid #b8b8b8;
+	padding-bottom: 0px;
+  min-height: 30px;
+}
+
+.select2-container .selection .select2-selection .select2-selection__rendered .select2-selection__choice[title="- None -"] {
+	display: none;
+}
