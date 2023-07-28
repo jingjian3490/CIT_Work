@@ -21,7 +21,15 @@ The global Drupal class provides static methods to access several of the most c
 
 # Defining  Services
 
-使用 module.services.yml 文件定义访问，文件结构应该和 core.services.yml 文件结构一样。
+使用 module.services.yml 文件定义服务，文件结构应该和 core.services.yml 文件结构一样。
 
 https://www.drupal.org/node/2122195
 https://www.drupal.org/docs/drupal-apis/services-and-dependency-injection/services-and-dependency-injection-in-drupal-8
+
+SELECT "node__field_date_from_to"."field_date_from_to_value" AS "node__field_date_from_to_field_date_from_to_value", "node_field_data"."nid" AS "nid"
+FROM
+{node_field_data} "node_field_data"
+LEFT JOIN {node__field_date_from_to} "node__field_date_from_to" ON node_field_data.nid = node__field_date_from_to.entity_id AND node__field_date_from_to.deleted = '0' AND (node__field_date_from_to.langcode = node_field_data.langcode OR node__field_date_from_to.bundle = 'webinar')
+WHERE ("node_field_data"."status" = '1') AND ("node_field_data"."type" IN ('event')) AND ((DATE_FORMAT(node__field_date_from_to.field_date_from_to_value, '%Y-%m-%d\T%H:%i:%s') > DATE_FORMAT('2023-07-28T03:21:45', '%Y-%m-%d\T%H:%i:%s')))
+ORDER BY "node__field_date_from_to_field_date_from_to_value" ASC
+LIMIT 10 OFFSET 0
