@@ -23,13 +23,108 @@ The global Drupal class provides static methods to access several of the most c
 
 使用 module.services.yml 文件定义服务，文件结构应该和 core.services.yml 文件结构一样。
 
-https://www.drupal.org/node/2122195
-https://www.drupal.org/docs/drupal-apis/services-and-dependency-injection/services-and-dependency-injection-in-drupal-8
 
-SELECT "node__field_date_from_to"."field_date_from_to_value" AS "node__field_date_from_to_field_date_from_to_value", "node_field_data"."nid" AS "nid"
-FROM
-{node_field_data} "node_field_data"
-LEFT JOIN {node__field_date_from_to} "node__field_date_from_to" ON node_field_data.nid = node__field_date_from_to.entity_id AND node__field_date_from_to.deleted = '0' AND (node__field_date_from_to.langcode = node_field_data.langcode OR node__field_date_from_to.bundle = 'webinar')
-WHERE ("node_field_data"."status" = '1') AND ("node_field_data"."type" IN ('event')) AND ((DATE_FORMAT(node__field_date_from_to.field_date_from_to_value, '%Y-%m-%d\T%H:%i:%s') > DATE_FORMAT('2023-07-28T03:21:45', '%Y-%m-%d\T%H:%i:%s')))
-ORDER BY "node__field_date_from_to_field_date_from_to_value" ASC
-LIMIT 10 OFFSET 0
+### Defining service by fully qualified name of PHP namespace
+
+不需要为服务添加机器名称，可以简单地使用全限定名代替，如
+```yaml
+services:
+  Drupal\coffee_shop\Service\Barista:
+    class: Drupal\coffee_shop\Service\Barista
+    arguments: ['@config.factory']
+```
+
+然后通过PHP命名空间检索服务，如
+```php
+$barista = \Drupal::getContainer()
+  ->get(Barista::class);
+```
+
+Here is an example with the extra abstraction layer with a service machine name, which means too much work (old approach):
+
+```php
+\Drupal::service('modulename.service_machinename');
+```
+
+# Autowiring services
+
+# Injecting dependencies into controllers, forms and blocks
+
+### Dependency Injection for a Form
+
+Forms that require a Drupal service or a custom service should access the service using dependency injection.
+
+An example form  uses the 'current_user' service to get the uid of the current user. File contents of `/modules/example/src/Form/ExampleForm.php` if the module is in `/modules/example`:
+
+```php
+<?php
+
+namespace Drupal\example\Form;
+
+use Drupal\Core\Form\FormBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+/**
+ * Implements an example form.
+ */
+class ExampleForm extends FormBase {
+
+  /**
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $account;
+
+  /**
+   * @param \Drupal\Core\Session\AccountInterface $account
+   */
+  public function __construct(AccountInterface $account) {
+    $this->account = $account;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    // Instantiates this form class.
+    return new static(
+      // Load the service required to construct this class.
+      $container->get('current_user')
+    );
+  }
+
+  /**
+   * {@inheritdoc}.
+   */
+  public function getFormId() {
+    return 'example_form';
+  }
+
+  /**
+   * {@inheritdoc}.
+   */
+  public function buildForm(array $form, FormStateInterface $form_state) {
+
+    // Get current user data.
+    $uid = $this->account->id();
+    
+    // ...
+  }
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function submitForm(array &$form, FormStateInterface $form_state) {
+    // ...
+  }
+}
+```
+
+[[为什么为form、block进行依赖注入时需要实现create方法]]
+
+
+
+
+
+
