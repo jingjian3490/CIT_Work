@@ -1,4 +1,4 @@
-**view的row**
+###### **view的row**
 ```php
 在view-view-unformat.html.twig文件 先打印 row 
 {{ dump（row）}}
@@ -12,9 +12,11 @@
 row.content['#row'].node_field_data_type_1
 row.content['#row'].node_field_data_type
 
+嵌套关联数组取值 数组【‘key’】，然后是普通关联数组，使用 .key 获取或 ->key 获取
+
 ```
 
-**view的result**
+###### **view的result**
 ```php
 在 .module文件 先打印view的result
 
@@ -37,4 +39,40 @@ ucfirst() 函数，PHP内置，将字符串的第一个字母大写。
 
 遍历关联数组用 foreach
 
+普通关联数组，使用 .key 获取或 ->key 获取
+
 ```
+
+
+###### 在PHP文件，打印普通关联数组
+```php
+$response = (array) $response;  
+dump($response);  //结果是普通的关联数组
+foreach ($response as $obj) {  
+//获取普通关联数组的值，直接使用 数组 -> key
+  if (isset($obj->container) && $obj->container == 'MP4') {  
+    $src = $obj->src;  
+  }
+}
+```
+```php
+获取普通关联数组的值，直接使用 数组 -> key
+```
+![[Pasted image 20230822135122.png]]
+
+
+###### 在PHP文件，打印嵌套数组
+```php
+$response = (array) $response; 
+dump($response);  //结果是嵌套的关联数组
+foreach ($response as $obj) {  
+//嵌套关联数组取值 数组【‘key’】
+  if (isset($obj['container']) && $obj['container'] == 'MP4') {  
+    $src = $obj['src'];  
+  }
+}
+```
+```php
+嵌套关联数组取值 数组【‘key’】
+```
+![[Pasted image 20230822134548.png]]
