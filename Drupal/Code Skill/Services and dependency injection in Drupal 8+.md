@@ -122,6 +122,7 @@ class ExampleForm extends FormBase {
 ```
 
 [[为什么为form、block进行依赖注入时需要实现create方法]]
+实现了create方法就不用在service.yml文件添加相关信息了
 
 
 
