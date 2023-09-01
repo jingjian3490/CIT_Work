@@ -29,5 +29,14 @@
     font-weight: bold;
 }
 
+{
+  "CodeMirror Options@@cm-comment@@light": "#07A01A",
+  "CodeMirror Options@@cm-comment@@dark": "#07A01A",
+  "CodeMirror Options@@cm-background-color@@light": "#151827",
+  "CodeMirror Options@@cm-background-color@@dark": "#151827"
+}
+
 
 ```
+
+
