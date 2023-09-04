@@ -422,7 +422,8 @@ let count = function () {
   return function () {  
     counter1 += 1;  
     console.log(counter1);  
-  };}();  
+  };
+}();  
 // console.log(counter1);  
 count();  
 // console.log(counter1);  
