@@ -221,10 +221,12 @@ public function sendEmail(FormStateInterface $form_state) {
       '@phone_number' => $form_state->getValue('phone_number'),  
       '@main_speciality' => $form_state->getValue('speciality') ?: 'N/A',  
       '@detailed_speciality' => $form_state->getValue('sub_speciality') ?: 'N/A',  
-    ];    
+    ]; 
+       
     // Send email to HCP.  
 	// 新建一个Notification实例（notification_services模块的）
 	// 使用Notification类的常量 Notification::NOTIFICATION_TYPE_EMAIL
+	// 关于发送邮件
     $hcp_notification = new Notification(Notification::NOTIFICATION_TYPE_EMAIL, 'user_submit_callback_request', $form_state->getValue('email'), $replace_data);  
     $this->emailServices->sendNotification($hcp_notification);  
     // Send email to manager.  
@@ -236,11 +238,12 @@ public function sendEmail(FormStateInterface $form_state) {
         $manager_email_to = implode(', ', array_column($manager_emails, 'value'));  
         $manager_notification = new Notification(Notification::NOTIFICATION_TYPE_EMAIL, 'manager_receives_callback_request', $manager_email_to, $replace_data);  
         $this->emailServices->sendNotification($manager_notification);  
-      }    }    return TRUE;  
+      }     
+    }      
+    return TRUE;  
   }  
-  /**  
-   * Retrieves options for the contacted.   *   * @return array  
-   *   Return the contacted options.   */  protected function getContactedOptions(): array {  
+ 
+  protected function getContactedOptions(): array {  
     $storage = $this->entityTypeManger->getStorage('taxonomy_term');  
     $options = [];  
     $term_ids = $storage->getQuery()  
@@ -253,16 +256,19 @@ public function sendEmail(FormStateInterface $form_state) {
       $terms = $storage->loadMultiple($term_ids);  
       foreach ($terms as $id => $term) {  
         $options[$id] = $term->label();  
-      }    }    if (empty($options)) {  
+      }    
+    }    
+    if (empty($options)) {  
       $options = [  
         'morning' => $this->t('Morning'),  
         'afternoon' => $this->t('Afternoon'),  
         'evening' => $this->t('Evening'),  
-      ];    }    return $options;  
+      ];    
+    }   
+    return $options;  
   }  
-  /**  
-   * Retrieves options for the contact via.   *   * @return array  
-   *   Return the contact via options.   */  protected function getContactedViaOptions(): array {  
+
+protected function getContactedViaOptions(): array {  
     $storage = $this->entityTypeManger->getStorage('taxonomy_term');  
     $options = [];  
     $term_ids = $storage->getQuery()  
@@ -275,11 +281,15 @@ public function sendEmail(FormStateInterface $form_state) {
       $terms = $storage->loadMultiple($term_ids);  
       foreach ($terms as $id => $term) {  
         $options[$id] = $term->label();  
-      }    }    if (empty($options)) {  
+      }    
+    }    
+    if (empty($options)) {  
       $options = [  
         'virtual_call' => $this->t('Virtual call'),  
         'phone_number' => $this->t('Phone call'),  
-      ];    }    return $options;  
+      ];    
+    }    
+    return $options;  
   }  
 }
 
