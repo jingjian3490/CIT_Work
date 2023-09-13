@@ -6,6 +6,8 @@
 ## 实现步骤（以Pfemasia项目Notification模块为例）
 
 #### 1. 安装需求模块
+使用 swift mailer 配置SMTP时，要更改站点基础设置的email地址，使其和开通SMTP授权的账号一致![[Pasted image 20230912091333.png]]
+
 #### 2. 新建自定义邮件服务模块
 ```md
 info.yml
