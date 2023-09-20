@@ -66,3 +66,10 @@ adpsg.large:
 根据断点文件创建需要的Image Style
 ###### 5. Assign the responsive image style to the image field.
 在 Content type、Paragraph的 `Manage display` 页面设置image 字段的 Format 为 Responsive image style 并配置
+
+## Media & Media Library
+用于创建 Media 字段和在文本编辑器中开启 drupal-media 标签
+
+在Text format 的Full HTML中启用media，需要配置启用 Embed media: Config ---Content authoring --- Text formats and editors --- Full HTML --- Configure --- Embed media，启用之后还需要手动放置图标
+
+For Drupal ==10==，need to create media type ==before== launch drupal-media tag to CKEditer ==5==.
