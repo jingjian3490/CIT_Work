@@ -73,3 +73,27 @@ adpsg.large:
 在Text format 的Full HTML中启用media，需要配置启用 Embed media: Config ---Content authoring --- Text formats and editors --- Full HTML --- Configure --- Embed media，启用之后还需要手动放置图标
 
 For Drupal ==10==，need to create media type ==before== launch drupal-media tag to CKEditer ==5==.
+
+## Geolocation & Geolocation - Google Maps API
+Geolocation本身只存储经度和纬度，要结合 Map API才能显示地图。
+安装Google Map API后要配置 Key。
+创建字段类型为 Geolocation 的字段，display 要设置为 Geolocation Formatter - Map
+#### 详解  Geolocation Formatter - Map 设置
+##### 通用设置
+###### ==1. Set map marker==
+用来设置地图小按钮展示设置和点击地图小按钮后显示的信息
+![[Pasted image 20230922173355.png]]
+![[Pasted image 20230922173502.png]]
+
+###### ==2. Centre override==
+中心覆盖，启用 Fit location 后页面地图中心为字段的值， zoom 为缩放比例
+![[Pasted image 20230922173811.png]]
+
+##### _Google Maps_ settings
+###### General
+高度：像素， 宽度：屏幕比例， 默认地图类型
+Zoom level：缩放聚焦等级，0最小，世界地图；20最大，街道级别
+###### Behavior
+控制mobile端地图行为，比如双手捏合缩放等
+
+###### Map Features
