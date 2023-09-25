@@ -89,7 +89,7 @@ Geolocation本身只存储经度和纬度，要结合 Map API才能显示地图�
 中心覆盖，启用 Fit location 后页面地图中心为字段的值， zoom 为缩放比例
 ![[Pasted image 20230922173811.png]]
 
-##### _Google Maps_ settings
+##### Google Maps settings 
 ###### General
 高度：像素， 宽度：屏幕比例， 默认地图类型
 Zoom level：缩放聚焦等级，0最小，世界地图；20最大，街道级别
@@ -97,3 +97,8 @@ Zoom level：缩放聚焦等级，0最小，世界地图；20最大，街道级�
 控制mobile端地图行为，比如双手捏合缩放等
 
 ###### Map Features
+==Map Control - StreetView==
+控制是否出现小人，拖放到地图是可显示街景
+
+==Map Control - Zoom==
+控制地图比例按钮（+、-号）

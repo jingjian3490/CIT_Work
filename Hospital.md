@@ -85,3 +85,5 @@ class HospitalFilterForm extends FormBase {
 #### 5. 看看 view
 ![[Pasted image 20230921161014.png]]
 ==这是数据源为 Hospital View，而 Hospital 是自定义实体==
+
+#### 6. 研究实体
