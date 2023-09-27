@@ -171,7 +171,7 @@ $fields['created'] = BaseFieldDefinition::create('created')
 #或者，您可以定义一个
 在本案例：定义一个 "default" 表单来处理 "add" 和 "edit" 表单，**而不是分别定义**它们。
 
-#### 3. 看完Form看对应的 routing.yml
+##### 3. 看完Form看对应的 routing.yml
 #default_entity_form 
 ```yml
 pfadpsg_hospital.add:  
@@ -192,3 +192,49 @@ pfadpsg_hospital.add:
 #    }  
 #}
 ```
+
+
+##### 4. 依注解看 `"view_builder" = "Drupal\Core\Entity\EntityViewBuilder"`
+本例使用了core的默认视图构建器来渲染视图的输出，可以省略这个注解。
+如果计划使用`Drupal\Core\Entity\EntityViewBuilder`作为您实体的视图构建器，并且没有任何定制的显示逻辑，那么可以在实体注解中省略`view_builder`。如果省略，Drupal会默认使用`EntityViewBuilder`来处理实体的显示。
+
+**EntityViewBuilder (`Drupal\Core\Entity\EntityViewBuilder`)**:
+- 负责构建和渲染实体。
+- 为实体提供默认的模板和渲染数组。
+- 提供一个标准的方法来添加缓存标签、上下文和最大有效期，以确保正确的缓存行为。
+- 允许其他模块通过`hook_ENTITY_TYPE_view()`和`hook_entity_view()`来修改渲染数组
+##### 5. 依注解看 `"views_data" = "Drupal\views\EntityViewsData"`
+`views_data`类提供了与Views模块的集成，它描述了如何在Views模块中使用和显示实体字段。如果您计划使用默认的`EntityViewsData`并且没有任何定制的Views集成需求，那么您可以在实体注解中省略`views_data`。
+
+**EntityViewsData (`Drupal\views\EntityViewsData`)**:
+- 为每个实体字段提供默认的Views集成，允许它们在Views界面中被添加、过滤和排序。
+- 提供默认的关系，如与其他实体的引用关系。
+- 自动生成Views插件定义，例如字段、排序、过滤器和关系。
+- 可以被其他模块通过hooks修改，以定制或增强默认的Views集成。
+
+##### 6. 依注解看 `storage_schema" = "Drupal\pfadpsg_hospital\Entity\HospitalSchema"`
+在Drupal的实体定义中，`storage_schema`通常指定一个类，用于定义实体在数据库中的模式，例如字段的数据类型、大小、索引等。但如果您没有为实体定义特定的模式需求或自定义模式行为，那么您完全可以省略这个注解。
+
+当您省略`storage_schema`时，Drupal核心会使用默认的模式处理器`Drupal\Core\Entity\Sql\SqlContentEntityStorageSchema`。这个默认的处理器能够根据您在实体字段定义中提供的信息自动构建和管理数据库模式。
+
+本例自定义，因为：
+```php
+/**  
+ * 对于'address'和'zone'字段，我们添加了索引。  
+ * 在数据库中为这些字段添加索引可以提高查询性能，特别是当您经常需要根据这些字段进行筛选或排序时。  
+ */  
+if ($table_name == 'hospital') {  
+  switch ($field_name) {  
+    case 'address':  
+      $this->addSharedTableFieldIndex($storage_definition, $schema);  
+      break;  
+  
+    case 'zone':  
+      $this->addSharedTableFieldIndex($storage_definition, $schema);  
+      break;  
+  }
+}
+```
+
+
+   
