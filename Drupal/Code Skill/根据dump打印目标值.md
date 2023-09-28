@@ -79,3 +79,6 @@ foreach ($response as $obj) {
 
 ### 结果包含实体
 要获取实体中的属性，使用get方法，而不能使用数组形式。
+![[Pasted image 20230928163731.png]]
+
+![[Pasted image 20230928163711.png]]

@@ -237,4 +237,11 @@ if ($table_name == 'hospital') {
 ```
 
 
-   
+
+
+
+#### 7. 有实体了需要添加、展示数据
+`添加：`根据实体定义时的注解，default form 和对应的 routing.yml 文件 可以添加实体。
+
+`展示：`案例使用view block进行展示，发现多了个字段 `Hospital: Proximity Form Field (location)`
+
