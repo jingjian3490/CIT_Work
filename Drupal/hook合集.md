@@ -20,7 +20,7 @@ function pfrpsg_preprocess_html(&$variables) {
 
 
 
-#### hook_views_data_alter & hook_views_query_alter
+#### `hook_views_data_alter` & `hook_views_query_alter`
 `hook_views_data_alter` 和 `hook_views_query_alter` 都是 Drupal 的 Views 模块中的钩子，用于修改 Views 查询和数据定义。它们的主要区别在于它们的作用和触发时机：
 
 1. `hook_views_data_alter`：

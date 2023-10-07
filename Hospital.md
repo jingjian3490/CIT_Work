@@ -125,7 +125,8 @@ class Hospital extends ContentEntityBase implements ContentEntityInterface {
 class Hospital extends ContentEntityBase implements ContentEntityInterface {}
 ```
 
-- 字段定义
+- 字段定义，在这里对字段的定义在view中展示方式
+![[Pasted image 20231004095351.png]]
 ```php
 /**  
  * $fields: 这是一个数组，用于存储实体类型的所有基础字段定义。  
@@ -236,12 +237,126 @@ if ($table_name == 'hospital') {
 }
 ```
 
-
-
-
-
-#### 7. 有实体了需要添加、展示数据
+#### 7. 有实体了需要添加
 `添加：`根据实体定义时的注解，default form 和对应的 routing.yml 文件 可以添加实体。
 
 `展示：`案例使用view block进行展示，发现多了个字段 `Hospital: Proximity Form Field (location)`
 
+------
+
+#### 8. 进行展示数据，第一个 view
+案例使用view展示，使用了三个 view ： ==Hospital List Block、Hospital Map Block、  
+Manage List==
+
+查看案例 Hospital List Block 展示字段时发现不同，有两处奇怪点
+1. `Tel` 和  `Website` 字段被修改了
+2. 多出了一个 `Proximity Form Field (location)` 字段
+![[Pasted image 20231004101635.png]]
+
+###### ==探索对字段的修改==
+通过对比，初步判断是为了添加HTML属性，字段被修改后有了HTML属性
+![[Pasted image 20231004102409.png]]
+如何对view的数据进行修改？先到 .module 文件看看，发现hook：pfadpsg_hospital_views_data_alter
+发现并不是修改原字段，而是新增字段对原字段进行加强：
+![[Pasted image 20231004121031.png]]
+
+```php
+/**   .module
+ * 为hospital表 增加 两个自定义字段tel_html和website_html，并分别为它们指定了一个处理程序。  
+ *  
+ * 为hospital表的$data数组添加一个新的定义tel_html，这定义了一个 新的 视图字段，  
+ * 其处理程序 ID 为 hospital_tel_handler。  
+ *  
+ * 处理程序的定义在 Drupal\pfadpsg_hospital\Plugin\views\field\HospitalWebsiteHandler  
+ */
+ $data['hospital']['tel_html'] = [  
+  'title' => 'Tel Html',  
+  'field' => [  
+    'id' => 'hospital_tel_handler'  
+  ],  
+];
+```
+
+```php
+// HospitalWebsiteHandler
+public function render(ResultRow $values) {  
+  $hospital = $values->_entity;  
+  $tel = $hospital->get('tel')->value;  
+  $name = $hospital->get('name')->value;  
+  if ($tel) {  
+    $sc_link = "sc:linkname='clinic locator|pharmacy finder results|$name|telephone'";  
+    $tel_text = '<a class="custom-field clinic-tel-number" href="tel:' . $tel . '" ' . $sc_link . '>' . $tel . '</a>';  
+    $tel_html = Markup::create($tel_text);  
+    // 为了安全性，任何要输出到页面上的HTML应该经过适当的清理和过滤，以防止跨站脚本攻击（XSS）。  
+    // Markup::create($tel_text) 返回一个Markup对象，它包含了原始的HTML字符串。  
+    // 这个对象可以被直接返回给Drupal的渲染系统，并在页面上输出其内容。  
+    return $tel_html;  
+  }  return NULL;  
+}
+```
+
+
+###### 处理器
+处理器（Handler）在Drupal的上下文中是一个关键概念，尤其是在与视图（Views）相关的功能中。
+
+在Drupal的视图系统中，处理器是用来定义和处理特定类型数据的插件。它们提供了特定于字段、筛选器、关系、排序等的功能。每种类型的数据（例如内容实体的字段或属性）在视图中都可以有一个或多个相关的处理器。
+
+以下是Drupal中几种常见的处理器类型：
+
+1. **字段处理器 (Field Handlers)**: 这些处理器定义了如何在视图结果中展示特定的字段。
+    
+2. **筛选器处理器 (Filter Handlers)**: 定义了如何基于特定条件过滤或筛选视图结果。
+    
+3. **排序处理器 (Sort Handlers)**: 定义了如何根据某个字段或条件对视图结果进行排序。
+    
+4. **关系处理器 (Relationship Handlers)**: 允许基于实体之间的关系（例如节点和作者）添加额外的字段、筛选器和排序到视图中。
+    
+5. **区域处理器 (Area Handlers)**: 允许在视图的头部、页脚或空结果区域添加自定义文本或其他内容。
+
+###### `Proximity Form Field`
+`geolocation Field`模块在Drupal中提供了地理位置功能，包括存储、处理和显示地理位置数据。其中，`Proximity Form Field`是该模块的一个组件，专门用于处理地点之间的接近性或距离。
+
+`Proximity Form Field`的主要用途和特点如下：
+
+1. **用户界面**: 它提供了一个表单字段，允许用户输入一个中心点（例如，他们的当前位置或特定的地址）。
+    
+2. **计算距离**: 结合给定的中心点和存储的地理位置数据，它可以计算内容或地点与给定中心点之间的距离。
+    
+3. **过滤内容**: 在视图或其他查询上下文中，用户可以使用这个字段来过滤结果，基于与指定地点的距离。例如，用户可能想要找到距离他们当前位置5公里以内的所有餐馆。
+    
+4. **排序**: 在视图中，可以根据与给定中心点的距离对结果进行排序，从而找到最近的地点。
+    
+5. **兼容性**: `Proximity Form Field`与`geolocation Field`模块中的其他组件兼容，例如地图显示、标记和其他地理位置相关的功能。
+    
+6. **灵活性**: 这个字段提供了一些配置选项，允许管理员调整其行为，例如设置默认中心点、距离单位（公里或英里）等。
+
+
+![[Pasted image 20231004221329.png]]
+`Proximity Form Field`在Drupal中的配置界面。它为用户提供了多种方式来输入或确定一个地理位置，然后根据该位置进行距离或接近性的计算。以下是每个选项的解释：
+
+1. **ipstack Service**:
+    
+    - 该服务会使用访问者的IP地址来大致确定其地理位置。这是一个第三方服务，通常用于快速、自动地为用户提供一个大致的位置。
+2. **Client location**:
+    
+    - 这个选项将尝试使用浏览器的地理位置API来获取访问者的精确位置。这要求用户给予网站权限来访问其位置数据。
+    - **Auto-submit form**: 如果位置可以被设定，此选项会自动提交表单，无需用户点击任何按钮。
+    - **Hide coordinates form**: 如果选择这个选项，用户将看不到实际的经纬度坐标，即使他们的位置已经被获取。这对于那些希望简化用户界面的场景可能很有用。
+    - 如果客户端位置可用并且为空，则将设置位置。这通常需要HTTPS连接。
+3. **Fixed coordinates**:
+    
+    - 这个选项允许管理员设置一个固定的经纬度坐标作为中心点。这对于那些希望以特定地点为中心进行搜索的场景特别有用，例如公司总部或特定的城市中心。
+    - **Latitude** 和 **Longitude**: 这里可以手动输入固定的经纬度坐标。
+4. **Geocoder address input**:
+    
+    - 允许用户输入一个实际的地址（例如“101 Main Street, Anytown, USA”），然后使用地理编码服务将该地址转换为经纬度坐标。
+5. **Coordinates input**:
+    
+    - 这个选项提供了一个简单的表单字段，允许用户直接输入经纬度坐标。
+6. **Distance unit**:
+    
+    - 定义计算距离的单位。在这里，您选择了“Kilometer”。这意味着系统在内部总是以公里为单位处理值。
+
+关于 `Calculate proximity` 按钮，由前端控制不显示
+
+#### 9. 看第二个 view ： Hospital Map List
