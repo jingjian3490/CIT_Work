@@ -360,3 +360,4 @@ public function render(ResultRow $values) {
 关于 `Calculate proximity` 按钮，由前端控制不显示
 
 #### 9. 看第二个 view ： Hospital Map List
+
