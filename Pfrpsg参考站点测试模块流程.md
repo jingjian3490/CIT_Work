@@ -12,14 +12,14 @@ if (!Cookies.get('poemTestEmpty')) {
   setCookie('poemTestEmpty', 'false');  
 }
 ```
-poemTestResults 存储回答结果，poemTestEmpty 用于判断 用户回答数量是否大于等于2，小于则测试没有意义，需要重新测试。
+poemTestResults 存储回答结果，poemTestEmpty 用于判断 用户回答数量是否大于等于6，小于则测试没有意义，需要重新测试。
 #### test-result
 主要是发送邮件按钮和生成PDF文件按钮，单机Email会弹出邮件输入框。
 # Test-Start
 主体是一个node，包括 top banner 和 bottom footer，中间是3个自定义 block，点击 `Start now` 按钮后会生成cookie：`Cookies.set('agreeDisclaimer', 'true');`。
 
 
-数据准备
+###### 数据准备
 ```php
 if (in_array($internal,  
 [ALIAS_PATH_POEM_TEST_START, ALIAS_PATH_POEM_TEST_RESULT, ALIAS_PATH_MILD_AD])) {  
@@ -34,7 +34,7 @@ if (in_array($internal,
   {{ drupal_entity('block', 'assess_my_condition_how_to_answer', check_access=false) }}
 ```
 
-如果没有同意条款直接访问 Test 页面会跳转的 Start 页面逻辑：
+###### 如果没有同意条款直接访问 Test 页面会跳转的 Start 页面逻辑：
 在 `Drupal\pfadpsg_assess_my_condition\StackMiddleware;` 中实现
 ```php
 // 检查是否同意条款  
@@ -228,3 +228,60 @@ $buttonPdf.on('click', function (e) {
 });
 ```
 
+```php
+
+$fields['label'] = BaseFieldDefinition::create('string')  
+  ->setLabel(t('MIDAS GRADE'))  
+  ->setRequired(TRUE)  
+  ->setSetting('max_length', 255)  
+  ->setDisplayOptions('form', [  
+    'type' => 'string_textfield',  
+    'weight' => -5,  
+  ])  ->setDisplayConfigurable('form', TRUE)  
+  ->setDisplayOptions('view', [  
+    'label' => 'hidden',  
+    'type' => 'string',  
+    'weight' => -5,  
+  ])  ->setDisplayConfigurable('view', TRUE);  
+  
+$fields['description'] = BaseFieldDefinition::create('text_long')  
+  ->setLabel(t('MIDAS DESCRIPTION'))  
+  ->setDisplayOptions('form', [  
+    'type' => 'text_textarea',  
+    'weight' => 10,  
+  ])  ->setDisplayConfigurable('form', TRUE)  
+  ->setDisplayOptions('view', [  
+    'type' => 'text_default',  
+    'label' => 'above',  
+    'weight' => 10,  
+  ])  ->setDisplayConfigurable('view', TRUE);  
+  
+$fields['score'] = BaseFieldDefinition::create('string')  
+  ->setLabel(t('MIDAS SCORE'))  
+  ->setRequired(TRUE)  
+  ->setSetting('max_length', 255)  
+  ->setDisplayOptions('form', [  
+    'type' => 'string_textfield',  
+    'weight' => -5,  
+  ])  ->setDisplayConfigurable('form', TRUE)  
+  ->setDisplayOptions('view', [  
+    'label' => 'hidden',  
+    'type' => 'string',  
+    'weight' => -5,  
+  ])  ->setDisplayConfigurable('view', TRUE);  
+  
+$fields['count'] = BaseFieldDefinition::create('integer')  
+  ->setLabel(t('COUNT'))  
+  ->setRequired(FALSE)  
+  ->setDefaultValue(0)  
+  ->setSetting('min', 0)  
+  ->setDisplayOptions('form', [  
+    'type' => 'number',  
+    'weight' => 16,  
+  ])  ->setDisplayConfigurable('form', TRUE)  
+  ->setDisplayOptions('view', [  
+    'label' => 'above',  
+    'type' => 'number',  
+    'weight' => 16,  
+  ])  ->setDisplayConfigurable('view', TRUE);
+```
