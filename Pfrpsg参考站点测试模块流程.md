@@ -100,6 +100,31 @@ agreeDisclaimer 为 true
 poemTestEmpty 为 false
 poemTestResults 为非空数组
 点击 `Submit` 按钮，去到 Result 页面
+###### 5. js数据处理
+```php
+1. 当点击选项
+// 将当前点击的答案存储在 $selectedAnswers 数组的相应位置。  
+$selectedAnswers[questionIndex] = _self;
+
+// 调用 scoresSet 函数，并传递当前问题的索引和当前选择答案的数据值
+scoresSet(questionIndex, $(_self)?.data('value'));
+// 将选项代表的值存储带cookie：poemTestResult
+function scoresSet(index, score) {  
+  const poemTestResult = JSON.parse(Cookies.get('poemTestResults'));  
+  poemTestResult[index] = score;  
+  setCookie('poemTestResults', JSON.stringify(poemTestResult));  
+}
+
+2. 提交处理
+// 将没有选择的选项设置为 n
+for (let i = 0; i < 7; i++) {  
+  if (!$selectedAnswers[i] || $selectedAnswers[i] === -1) {  
+    scoresSet(i, 'n');  
+    emptySum += 1;  
+  }}
+```
+
+
 # Test-Result
 主体还是一个node，包括 top banner 和 bottom footer，中间是3个自定义 block 和、2个form 和部分自定义复写组成.
 ###### 1.  .module 文件准备数据
