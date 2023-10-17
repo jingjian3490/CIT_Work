@@ -46,4 +46,8 @@ $field_value = $paragraph->get('field_machine_name')->getValue();
         // 保存实体。  
         $grade_I_entity->save();  
       }    }  }}
+
+
+  $variables['#cache']['max-age'] = 0;
 ```
+
