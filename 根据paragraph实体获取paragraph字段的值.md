@@ -51,3 +51,7 @@ $field_value = $paragraph->get('field_machine_name')->getValue();
   $variables['#cache']['max-age'] = 0;
 ```
 
+1. adjust 'result' page twig template
+2. 'test' 'result' page redirects to 'agree' page logic  
+3. save form data to custom entity
+4. config export
