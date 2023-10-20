@@ -291,3 +291,12 @@ function notification_services_mail($key, &$message, $params) {
   }
 }
 ```
+
+Hi there,  
+Thank you for taking the The Migraine Disability Assessment Test (MIDAS). Your results have been generated here for you to download, print, and show to your medical practitioner. Where necessary, please bring a copy of these results to your consultation so your doctor can help diagnose and advise on your condition.  
+Please do not reply as this is an unattended email box.  
+  
+To report any Adverse Events related to Pfizer pharmaceutical products, please contact us via the  
+following: SGP.AEReporting@pfizer.com  
+  
+If you have any medical enquiries about Pfizer pharmaceutical products, please contact our medical information
