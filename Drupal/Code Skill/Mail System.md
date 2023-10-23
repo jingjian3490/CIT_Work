@@ -300,3 +300,147 @@ To report any Adverse Events related to Pfizer pharmaceutical products, please c
 following: SGP.AEReporting@pfizer.com  
   
 If you have any medical enquiries about Pfizer pharmaceutical products, please contact our medical information
+
+
+## custom email service
+
+###### 1. email entity
+```php 
+<?php  
+  
+namespace Drupal\pfrpsg_common;  
+  
+/**  
+ * Custom Email Entity class. */class CustomEmailEntity {  
+  
+  /**  
+   * Used to get email template from node.   */  public string $templateKey;  
+  
+  /**  
+   * The target address.   */  public string $receiver;  
+  
+  /**  
+   * The data to be fill template.   */  public array $data;  
+  
+  /**  
+   * Construct.   */  public function __construct(string $template_key, string $receiver, array $data) {  
+    $this->templateKey = $template_key;  
+    $this->receiver = $receiver;  
+    $this->data = $data;  
+  }  
+}
+```
+
+###### 2. send email service
+```php 
+<?php  
+  
+namespace Drupal\pfrpsg_common\Services;  
+  
+use Drupal\Core\Entity\EntityTypeManager;  
+use Drupal\Core\Mail\MailManager;  
+use Drupal\pfrpsg_common\CustomEmailEntity;  
+  
+/**  
+ * Custom Email Service. */class CustomEmailService {  
+  
+  /**  
+   * EntityTypeManager.   *   * @var \Drupal\Core\Entity\EntityTypeManager  
+   */  protected EntityTypeManager $entityTypeManager;  
+  
+  /**  
+   * MailManager.   *   * @var \Drupal\Core\Mail\MailManager  
+   */  protected MailManager $mailManager;  
+  
+  /**  
+   * Construct.   */  public function __construct(EntityTypeManager $entityTypeManager, MailManager $mailManager) {  
+    $this->entityTypeManager = $entityTypeManager;  
+    $this->mailManager = $mailManager;  
+  }  
+  /**  
+   * Send mail.   */  public function sendEmail(CustomEmailEntity $emailEntity): bool {  
+  
+    // 1. Get template  
+    try {  
+      $templates = $this->entityTypeManager->getStorage('node')  
+        ->loadByProperties([  
+          'type' => 'email_template',  
+          'field_template_key' => EMAIL_TEMPLATE_KEY,  
+          'status' => 1,  
+        ]);      $template = reset($templates);  
+    }    catch (\Exception $e) {  
+      \Drupal::logger('Email Service')  
+        ->error($emailEntity->templateKey . ':' . $e->getMessage());  
+      return FALSE;  
+    }  
+    // 2. Prepare email subject and body.  
+    if (!empty($emailEntity->data['@attachment'])) {  
+      $attachments = $emailEntity->data['@attachment'];  
+      if (!is_array($attachments)) {  
+        $attachments = [$emailEntity->data['@attachment']];  
+      }      foreach ($attachments as $attachment) {  
+        $params['attachment'][] = [  
+          'filepath' => $attachment,  
+          'filename' => basename($attachment),  
+          'filemime' => mime_content_type($attachment),  
+        ];      }      unset($emailEntity->data['@attachment']);  
+    }  
+    $params['headers']['MIME-Version'] = '1.0';  
+    $params['headers']['Content-Type'] = 'text/html; charset=UTF-8; format=flowed';  
+    $params['headers']['Content-Transfer-Encoding'] = '8Bit';  
+  
+    $params['subject'] = $template->field_email_subject->value;  
+    $params['body'] = $template->body->value;  
+    $params['token'] = $emailEntity->data;  
+  
+    // 3. Send mail.  
+    $result = $this->mailManager->mail(  
+      'pfrpsg_common',  
+      $emailEntity->templateKey,  
+      $emailEntity->receiver,  
+      NULL,  
+      $params  
+    );  
+  
+    if (!$result['result']) {  
+      \Drupal::logger('Email Service')->error('Error sending email');  
+      return FALSE;  
+    }    else {  
+      return TRUE;  
+    }  
+  }  
+}
+```
+
+```yml
+services:  
+  pfrpsg_common.email_services:  
+    class: Drupal\pfrpsg_common\Services\CustomEmailService  
+    arguments:  
+      - '@entity_type.manager'  
+      - '@plugin.manager.mail'
+```
+
+
+###### 3. placeholder in .module
+```php
+/**  
+ * Implements hook_mail(). $params from service. */function pfrpsg_common_mail($key, &$message, $params): void {  
+  
+  if (isset($params['subject'])) {  
+    $params['subject'] = new FormattableMarkup($params['subject'], $params['token']);  
+    $message['subject'] = $params['subject'];  
+  }  if (isset($params['body'])) {  
+    $params['body'] = new FormattableMarkup($params['body'], $params['token']);  
+    $message['body'][] = $params['body'];  
+  }  if (isset($params['headers']) && is_array($params['headers'])) {  
+    $message['headers'] = array_merge($message['headers'], $params['headers']);  
+  }  if (!empty($params['attachment'])) {  
+    $message['params']['attachments'] = $params['attachment'];  
+  }}
+```
+
+
+###### 4. create  Content Type  & node
+
+###### 5. by form to use email service
