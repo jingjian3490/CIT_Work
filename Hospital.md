@@ -261,7 +261,7 @@ Manage List==
 ![[Pasted image 20231004121031.png]]
 
 ```php
-/**   .module
+/**   .module  hook_views_data_alter()
  * 为hospital表 增加 两个自定义字段tel_html和website_html，并分别为它们指定了一个处理程序。  
  *  
  * 为hospital表的$data数组添加一个新的定义tel_html，这定义了一个 新的 视图字段，  
