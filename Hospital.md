@@ -245,6 +245,7 @@ if ($table_name == 'hospital') {
 ------
 
 #### 8. 进行展示数据，第一个 view
+###### 概述
 案例使用view展示，使用了三个 view ： ==Hospital List Block、Hospital Map Block、  
 Manage List==
 
@@ -253,13 +254,13 @@ Manage List==
 2. 多出了一个 `Proximity Form Field (location)` 字段
 ![[Pasted image 20231004101635.png]]
 
-###### ==探索对字段的修改==
+###### ==探索对字段的修改==  `自定义视图字段处理程序` [[自定义视图字段处理程序]]
 通过对比，初步判断是为了添加HTML属性，字段被修改后有了HTML属性
 ![[Pasted image 20231004102409.png]]
 如何对view的数据进行修改？先到 .module 文件看看，发现hook：pfadpsg_hospital_views_data_alter
 发现并不是修改原字段，而是新增字段对原字段进行加强：
 ![[Pasted image 20231004121031.png]]
-
+###### 声明字段
 ```php
 /**   .module  hook_views_data_alter()
  * 为hospital表 增加 两个自定义字段tel_html和website_html，并分别为它们指定了一个处理程序。  
@@ -267,7 +268,7 @@ Manage List==
  * 为hospital表的$data数组添加一个新的定义tel_html，这定义了一个 新的 视图字段，  
  * 其处理程序 ID 为 hospital_tel_handler。  
  *  
- * 处理程序的定义在 Drupal\pfadpsg_hospital\Plugin\views\field\HospitalWebsiteHandler  
+ * 处理程序的定义在 @var Drupal\pfadpsg_hospital\Plugin\views\field\HospitalWebsiteHandler  
  */
  $data['hospital']['tel_html'] = [  
   'title' => 'Tel Html',  
@@ -276,7 +277,7 @@ Manage List==
   ],  
 ];
 ```
-
+###### 实现字段
 ```php
 // HospitalWebsiteHandler
 public function render(ResultRow $values) {  
@@ -294,8 +295,12 @@ public function render(ResultRow $values) {
   }  return NULL;  
 }
 ```
+###### 字段处理程序和 hospital_tel_handler 字段处理程序的不同
+继承自`Drupal\views\Plugin\views\field\FieldPluginBase`：
+- `FieldPluginBase`是Drupal视图模块中所有字段处理程序的基础类。它提供了大量用于处理字段数据和渲染的基本方法。
 
-
+实现`Drupal\Core\Plugin\ContainerFactoryPluginInterface`接口：
+- `ContainerFactoryPluginInterface`是一个特殊的接口，用于标记插件为容器感知(container-aware)。换句话说，实现此接口的插件可以接收依赖注入，这意味着它们可以在构造函数中接收并使用其他Drupal服务。
 ###### 处理器
 处理器（Handler）在Drupal的上下文中是一个关键概念，尤其是在与视图（Views）相关的功能中。
 
@@ -360,4 +365,7 @@ public function render(ResultRow $values) {
 关于 `Calculate proximity` 按钮，由前端控制不显示
 
 #### 9. 看第二个 view ： Hospital Map List
-
+###### 概述
+![[Pasted image 20231027114056.png]]
+View的Format为“Geolocation CommonMap”
+“Geolocation CommonMap”和“Geolocation Layer”在Drupal的views中出现，是由于“Hospital”实体中定义了一个类型为“geolocation”的字段。这个字段是由`geolocation field`模块提供的，并且它用于存储经纬度信息。由于您已经在您的实体中使用了这个字段，所以在views的FORMAT选项中出现了与之相关的样式选项。
