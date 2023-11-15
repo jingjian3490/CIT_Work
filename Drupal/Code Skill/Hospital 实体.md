@@ -1,3 +1,4 @@
+[[实体]]
 #### 1. 入口：Navigation Menu，链接：`/clinic-locator`
 #### 2. clinic-locator是哪里设置？OOOOOO，这是一个node，里面的内容都是block填充的
 #### 3. 就只有一个block，来自 Pfadpsg Hospital 模块
