@@ -1,6 +1,6 @@
 
 ![[Pasted image 20231114164149.png]]
-###### 这是我创建的Paragraph，field_video_image 的 Entity reference 是media，media只有一个Image类型的字段field_media_image。 现在我复写了Paragraph的twig模板文件，我需要获取 field_video_image字段图片的路径，应该怎么办
+###### 这是我创建的Paragraph，field_video_image 的 Entity reference 是media，media只有一个Image类型的字段field_media_image。 现在我==复写Paragraph的twig模板==文件，我需要获取 field_video_image字段图片的路径，应该怎么办
 
 在Drupal 8 及以上版本中，要获取媒体实体中的图片字段的URL，通常需要使用`file`对象的`createFileUrl`方法。以下是一个在Twig模板中获取图片URL的示例：
 

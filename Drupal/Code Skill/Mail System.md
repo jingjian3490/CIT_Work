@@ -1,4 +1,27 @@
+## 使用Pfizer-login登录
+```php
+HAOH05  
+98031919
+cnQ9-V7SQJ$9-&4
 
+1. 使用` /pfizer-login `访问
+2. 输入用户名和PIN：HAOH05  98031919
+3. 选择第二个账号（ciandt后缀），输入验证码 889143
+4. 输入用户名和密码HAOH05  cnQ9-V7SQJ$9-&3
+```
+文件同步
+```php
+在source目录下运行
+scp -r caneg@172.21.2.211:/var/www/pfkpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+
+注意更改项目名称，密码为锁屏密码
+
+```
+## QQ邮箱SMTP授权码
+```
+2054463918@qq.com
+cfsafguaclupbgic
+```
 ## 需要的模块
 
 `Mail System`、`Swift Mailer`
@@ -302,7 +325,7 @@ following: SGP.AEReporting@pfizer.com
 If you have any medical enquiries about Pfizer pharmaceutical products, please contact our medical information
 
 
-## custom email service
+#### 3. custom email service
 
 ###### 1. email entity
 ```php 

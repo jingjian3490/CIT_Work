@@ -102,3 +102,16 @@ Zoom level：缩放聚焦等级，0最小，世界地图；20最大，街道级�
 
 ==Map Control - Zoom==
 控制地图比例按钮（+、-号）
+
+## Redirect
+==配置301重定向页面通==
+1. **安装和启用Redirect模块：**
+
+2. **配置重定向规则：**
+    - 转到“`Configuration`”（配置）页面，然后选择“`Search and metadata`”（搜索和元数据）下的“URL redirects”（URL重定向）。
+    - 点击“Add redirect”（添加重定向）按钮。
+3. **填写重定向信息：**
+    - 在"Redirect from"（重定向来源）中输入==原始URL==，别名不可以。
+    - 在"Redirect to"（重定向到）中输入目标URL。
+    - 在"Redirect status"（重定向状态）中选择"301 Moved Permanently"（301永久重定向）。
+    - 点击“Save”（保存）按钮。
