@@ -15,7 +15,7 @@ source /filename.sql;
 - ==同步文件==
 ```shell
 cd /var/www/projectKey
-scp -r caneg@172.21.2.211:/var/www/pfkpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+scp -r caneg@172.21.2.211:/var/www/pfevtpk/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
 ```
 - ==导出配置==
 ```shell
@@ -30,7 +30,7 @@ drush dcer media --folder=profiles/edisonknowpneumoniasg_profile/content
 drush dcer menu_link_content --folder=profiles/edisonknowpneumoniasg_profile/content  
 drush dcer user --folder=profiles/edisonknowpneumoniasg_profile/content
 drush dcer file --folder=profiles/edisonknowpneumoniasg_profile/content
-  注意文件名不能有空格，肉运行命令报错文件不存在，运行cron清除临时文件
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
 drush dcer taxonomy_term --folder=profiles/edisonknowpneumoniasg_profile/content
 ```
 - ==导出数据库==
@@ -50,4 +50,24 @@ sanitize:
     block_content__field_ckeditor: FALSE
 --------------------------------
 dblog 这个模块被 pfizer 忽略了，还有 views，导出来了也没用.
+```
+- ==完善settings.prod.php文件==
+```php
+// Uncomment and update the base URL with the production domain.  
+$settings['pfizer_base_url'] = "https://www.pfizer-genotropin-shizai-info.jp";  
+  
+// Set XML sitemap base hostname.  
+$config['simple_sitemap.settings']['base_url'] = $settings['pfizer_base_url'];  
+  
+// Adobe analysis.  
+$config['adobe_analytics'] = [  
+  'mode' => 'prod'  
+];  
+
+// 一般有两个一个用于私网登录CMS，一个用于公网，www是特殊
+$settings['trusted_host_patterns'] = [  
+  '^www\.pfizer-genotropin-shizai-info\.jp$',  
+  '^pfizergenotropinshizaiin\.pfizersite\.io$',  
+  '^pfizer-genotropin-shizai-info\.jp$',  
+];
 ```
