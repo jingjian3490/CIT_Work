@@ -17,7 +17,7 @@
 `Pfevtsg， Drupal\eventhub_s3`
 使用注释 API 添加队列，它们被视为插件。将队列工作器类放置在模块的 Plugin/QueueWorker 目录中，并为其定义 QueueWorker 注释，通常扩展 `QueueWorkerBase` 类，并实现 `processItem` 方法。
 - 实现 `ContainerFactoryPluginInterface`，以便能够使用依赖注入
-###### 定义 queue worker
+###### ==定义 queue worker==
 ```php
 <?php  
   
@@ -31,24 +31,36 @@ use Drupal\eventhub_s3\Services\ConnectService;
 use Symfony\Component\DependencyInjection\ContainerInterface;  
   
 /**  
- * S3 handler. * * @QueueWorker(  
- *   id = "upload_s3_queue", *   title = @Translation("Upload to S3 queue"),  
- *   cron = {"time" = 60} * ) */
+ * S3 handler. 
+ * 
+ * @QueueWorker(  
+ *   id = "upload_s3_queue", 
+ *   title = @Translation("Upload to S3 queue"),  
+ *   cron = {"time" = 60} 
+ * ) 
+ * */
 class UploadToS3Queue extends QueueWorkerBase implements ContainerFactoryPluginInterface {  
   
   use MessengerTrait;  
   
   /**  
-   * The logger.   *   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface  
-   */  protected $logger;  
+   * The logger.   
+   *   
+   * @var \Drupal\Core\Logger\LoggerChannelFactoryInterface  
+   */  
+   protected $logger;  
   
   /**  
-   * Connect to S3.   *   * @var \Drupal\eventhub_s3\Services\ConnectService  
-   */  protected $connectService;  
+   * Connect to S3.   
+   *   
+   * @var \Drupal\eventhub_s3\Services\ConnectService  
+   */  
+   protected $connectService;  
   
   /**  
    * {@inheritdoc}  
-   */  public function __construct(  
+   */  
+   public function __construct(  
     array $configuration,  
     $plugin_id,  
     $plugin_definition,  
@@ -61,7 +73,8 @@ class UploadToS3Queue extends QueueWorkerBase implements ContainerFactoryPluginI
   }  
   /**  
    * {@inheritdoc}  
-   */  public static function create(  
+   */  
+   public static function create(  
     ContainerInterface $container,  
     array $configuration,  
     $plugin_id,  
@@ -77,12 +90,13 @@ class UploadToS3Queue extends QueueWorkerBase implements ContainerFactoryPluginI
   }  
   /**  
    * {@inheritDoc}  
-   */  public function processItem($data) {  
+   */  
+   public function processItem($data) {  
     $this->connectService->processFilesToS3($data);  
   }  
 }
 ```
-###### 使用 queue worker
+###### ==使用 queue worker==
 在Drupal的队列系统中，`processItem` 方法的 `$data` 参数来源于队列中的项。当您将一个项加入队列时，这个项的数据就是 `$data`。这个数据是在您将任务加入队列时定义的，并且在队列工作器处理该项时作为参数传递给 `processItem` 方法。
 ```php
 public function uploadFile() {  
@@ -102,5 +116,6 @@ public function uploadFile() {
       $queue->createItem($event_id);  
     }  }  else {  
     \Drupal::logger('s3_cron_job')->info('No data should be uploaded to S3 today');  
-  }}
+  }
+}
 ```
