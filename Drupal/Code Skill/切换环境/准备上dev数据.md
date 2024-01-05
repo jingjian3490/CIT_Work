@@ -15,7 +15,7 @@ source /filename.sql;
 - ==同步文件==
 ```shell
 cd /var/www/projectKey
-scp -r caneg@172.21.2.211:/var/www/pfpksg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+scp -r caneg@172.21.2.211:/var/www/pfkpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
 ```
 - ==导出配置==
 ```shell
