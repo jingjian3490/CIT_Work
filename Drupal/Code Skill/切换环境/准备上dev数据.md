@@ -78,11 +78,52 @@ $settings['trusted_host_patterns'] = [
 ];
 ```
 
-
-
 ----------------------------------
-## Pfkpsg 项目 MTD 问题
+## Pfrpsg 
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfrpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+
+```shell
+准备模块：default-content 和 default-content-extra，Database Sanitize
+
+drush dcer shortcut --folder=profiles/migrainefreesg_profile/content  
+drush dcer node --folder=profiles/migrainefreesg_profile/content  
+drush dcer block_content --folder=profiles/migrainefreesg_profile/content  
+drush dcer media --folder=profiles/migrainefreesg_profile/content  
+drush dcer menu_link_content --folder=profiles/migrainefreesg_profile/content  
+drush dcer user --folder=profiles/migrainefreesg_profile/content
+drush dcer file --folder=profiles/migrainefreesg_profile/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=profiles/migrainefreesg_profile/content
+```
+
+```php
+drush dcer file 166 --folder=profiles/migrainefreesg_profile/content
 
 ```
-drush dcer block_content --folder=profiles/eventspfizerprocomvn_profile/content 
+## Pfevtpk
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfevtpk/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+
+```shell
+准备模块：default-content 和 default-content-extra，Database Sanitize
+
+drush dcer shortcut --folder=profiles/eventspfizerprocompk_profile/content  
+drush dcer node --folder=profiles/eventspfizerprocompk_profile/content  
+drush dcer block_content --folder=profiles/eventspfizerprocompk_profile/content  
+drush dcer media --folder=profiles/eventspfizerprocompk_profile/content  
+drush dcer menu_link_content --folder=profiles/eventspfizerprocompk_profile/content  
+drush dcer user --folder=profiles/eventspfizerprocompk_profile/content
+drush dcer file --folder=profiles/eventspfizerprocompk_profile/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=profiles/eventspfizerprocompk_profile/content
+```
+
+## Pfevtph
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfevtph/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
 ```
