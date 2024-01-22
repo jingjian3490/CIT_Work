@@ -1,3 +1,4 @@
+#### unset 函数
 ```php
 .theme pfemasia_preprocess_node函数
 
@@ -18,3 +19,5 @@ node--article--card-small.html.twig 文件
     </div>  
 {% endif %}
 ```
+#### URL 变量
+再也twig模板文件中直接使用 `url` 变量打印当前页面的 URL

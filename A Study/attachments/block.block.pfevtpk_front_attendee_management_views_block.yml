@@ -1,0 +1,30 @@
+uuid: 170a404a-996d-4ddc-89e3-bf38e9cf1311
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.front_attendee_management
+  module:
+    - system
+    - views
+  theme:
+    - evtpk
+id: pfevtpk_front_attendee_management_views_block
+theme: evtpk
+region: content
+weight: -2
+provider: null
+plugin: 'views_block:front_attendee_management-attendee_management_block'
+settings:
+  id: 'views_block:front_attendee_management-attendee_management_block'
+  label: ''
+  label_display: '0'
+  provider: views
+  context_mapping: {  }
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/event-attendee-access/*'
