@@ -147,3 +147,10 @@ scp -r caneg@172.21.2.211:/var/www/pfevtph/source/docroot/app/sites/default/file
 ```shell
 scp -r caneg@172.21.2.211:/var/www/pfevtph/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
 ```
+
+## Pfevttw
+
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfevttw/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
