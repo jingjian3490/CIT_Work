@@ -2,7 +2,7 @@
 ```php
 HAOH05  
 98031919
-cnQ9-V7SQJ$9-&4
+cnQ9-V7SQJ$9-&5
 
 1. 使用` /pfizer-login `访问
 2. 输入用户名和PIN：HAOH05  98031919

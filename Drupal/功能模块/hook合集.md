@@ -110,3 +110,6 @@ function eventhub_search_views_pre_render(ViewExecutable $view) {
   }
 }
 ```
+
+#### `hook_token_info` & `hook_tokens`
+[[自定义 Token]]

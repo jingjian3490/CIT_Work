@@ -1,3 +1,4 @@
+## 自定义 Twig 拓展函数&过滤器
 ```php
 1. 继承AbstractExtension类 (Twig\Extension\AbstractExtension)
 2. 实现 getFunctions()函数
@@ -17,7 +18,8 @@ class ExtendTwig extends AbstractExtension{
   
   public function getFunctions(){  
     return [  
-      new TwigFunction('test_twig',[$this,'testTwig']),  
+      new TwigFunction('test_twig',[$this,'testTwig']),  // 函数
+      new TwigFilter('replace_tokens', [$this, 'replaceTokens']),  // 过滤器
     ];  
  } 
   
@@ -39,3 +41,5 @@ services:
 {% set test = test_twig() %}  
 {{ test }}
 ```
+
+理解 Twig 过滤器：[[Twig 过滤器]]
