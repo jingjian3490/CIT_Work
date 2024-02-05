@@ -22,16 +22,4 @@ echo $firstValue;  // 输出: John
 foreach ($person as $key => $value) {
     echo "Key: $key, Value: $value\n";
 }
-
-**
-
-- Adverse event : [IDN.AEReporting@pfizer.com](mailto:IDN.AEReporting@pfizer.com) 
-- Medical Information : [INDONESIAMI@pfizer.com](mailto:INDONESIAMI@pfizer.com)
-- Contact Medical Affairs : [click here](mailto:indonesiami@pfizer.com?subject=Permintaan%20untuk%20dihubungi%20oleh%20Medical%20Affairs%20Scientist&body=Silahkan%20isi%20pertanyaan%20–%20pertanyaan%20di%20bawah%20ini,%20setelah%20tanda%20kurung%0D%0ANama%20dan%20gelar:%0D%0ANomor%20telepon:%0D%0AWaktu%20dan%20jam%20untuk%20dihubungi:%0D%0AEmail:%0D%0ABidang%20Terapeutik:%20(Silakan%20pilih:%20Onkologi/Anti-Infeksi-Anti-Fungi/Vaksin/Internal%20Medicine/Imunologi-Inflamasi/Rare%20Disease/COVID-19)%20%20%0D%0A%0D%0A)  
-- General Information :
-PT Pfizer Indonesia  
-28th Floor World Trade Center 3  
-Jl. Jend. Sudirman Kav.29-31,   
-Jakarta 12920, Indonesia  
-Telp: +62-21-8086 1400**
 ```

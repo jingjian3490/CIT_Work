@@ -23,7 +23,8 @@ public function submitForm(array &$form, FormStateInterface $form_state) {
         [          
           $record  
         ],  
-      ];    }  
+      ];    
+    }  
   }  
   if (!empty($operations)) {  
     batch_set([  
