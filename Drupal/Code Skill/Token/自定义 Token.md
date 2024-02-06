@@ -45,12 +45,9 @@ function pfkpsg_common_tokens($type, $tokens, array $data, array $options, Bubbl
 ```
 
 `BubbleableMetadata` 对象用于添加缓存上下文、缓存标签和缓存最大生存时间（max-age）。为了解决缓存问题，可以在的Token替换函数中添加适当的缓存上下文。
-
 ## 2. 使用自定义 Token
-
 Drupal标准token格式如下：  ==[type:name]==。
 要使用上一小节定义的token，则应该为 ==[pfkpsg_common:gcma-field]==
-
 #### 2.1 在 CMS 的文本框中使用
  **文本过滤器的作用**：在Drupal中，文本区域的处理依赖于配置的文本格式和过滤器。某些文本格式可能不会解析Token。为了让Token在基本块中被替换，你需要确保`使用的文本格式`配置了支持Token的过滤器。
 

@@ -4,5 +4,7 @@
 
 - [ ] 整理一下之前国家每个Spring story的task
 - [ ] 字段类型 Entity Reference Revisions 和 Entity Reference 
-- [ ] 显示模式为Entity Reference Revisions 和 Entity Reference 的view
+- [ ] 显示模式为Entity Reference Revisions 和 Entity Reference 的 view
 - [ ] Form API
+- [ ] SEO title 同一页面不同内容下
+- [x] form 容器
