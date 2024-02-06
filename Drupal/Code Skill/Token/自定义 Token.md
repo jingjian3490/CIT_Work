@@ -100,7 +100,7 @@ class MyCustomTwigExtension extends AbstractExtension {
 ## 3. 案例 pfkpsg
 
 项目 footer 上的 GCMA code 需要跟随 node 的变化而变化，使用 token 获取 node 的 GCMA 字段的值进行替换。
-###### #缓存问题
+遇到缓存问题
 ```php
 function pfkpsg_common_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {  
   $replacements = [];  

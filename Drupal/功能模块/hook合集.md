@@ -98,7 +98,11 @@ function evthub_theme_suggestions_page_alter(array &$suggestions, array $variabl
 ```
 Drupal将尝试使用名为 `page--error.html.twig` 的模板文件来渲染这些错误页面，如果该模板存在的话。
 
-#### hook_views_pre_render
+#### `hook_views_pre_render` & `hook_preprocess_views_view`
+###### ==hook_views_pre_render==
+- **执行时机**：在视图渲染之前，但在查询执行并且结果集==已经被==视图插件处理之后执行。
+- **用途**：可以用来修改视图的结果集，比如添加、移除或改变记录的内容，或者根据结果集的内容改变视图的设置（如标题、按钮等）。
+- **操作范围**：操作的是视图对象本身，你可以访问和修改视图的结果集和设置。
 在视图渲染成HTML之前，在查询执行和处理结果之后，对视图的结果进行操作或修改。使用这个钩子来更改或增强视图的输出。
 ```php
 function eventhub_search_views_pre_render(ViewExecutable $view) {
@@ -110,6 +114,73 @@ function eventhub_search_views_pre_render(ViewExecutable $view) {
   }
 }
 ```
+###### ==hook_preprocess_views_view==
+- **执行时机**：在视图渲染为HTML之前，它是一个==主题预处理==钩子，用于准备模板变量。
+- **用途**：用来添加或修改传递给视图模板的变量。这可以包括添加新的变量、改变类或属性、或者其他任何你想在模板中使用的数据。
+- **操作范围**：操作的是模板变量，这些变量将会被==传递==到`.html.twig`文件中去渲染输出。
+```php
+function eventhub_register_preprocess_views_view(array &$variables) {  
+  /**  
+   * @var \Drupal\views\ViewExecutable $view  
+   */  
+  $view = $variables['view'];  
+  if ($view->id() != 'pre_registration' || $view->current_display != 'event_list') {  
+    return;  
+  }  
+  $route = \Drupal::routeMatch();  
+  if ($route->getRouteName() != 'view.pre_registration.event_list') {  
+    return;  
+  }  
+  $event = $route->getParameter('event');  
+  if (empty($event)) {  
+    return;  
+  }  
+  $current_path = \Drupal::request()->getPathInfo();  
+  $upload_button = [  
+    'title' => t('Upload pre-registration'),  
+    'url' => Url::fromRoute('eventhub_register.pre_registration_import_csv', 
+                          ['node' => $event], 
+                          ['query' => ['destination' => $current_path]]),  
+    'attributes' => [  
+      'class' => [  
+        'button',  
+        'button--action',  
+        'button--primary',  
+        'button--small',  
+      ],    
+    ],  
+  ];  
+  $back_button = [  
+    'title' => t('Back to event list'),  
+    'url' => Url::fromRoute('view.cms_event_list.cms_event_page'),  
+    'attributes' => [  
+      'class' => ['button', 'button-action', 'button--small'],  
+    ],  
+  ];  
+  $links = [$back_button];  
+  /**  
+   * @var \Drupal\eventhub_attend\Services\AttendeeService $attendee_service  
+   */  
+  $attendee_service = \Drupal::service('eventhub_attend.attendee_service');  
+  if (!$attendee_service->hasAttendee(intval($event))) {  
+    array_unshift($links, $upload_button);  
+  }  
+  // Add action button to the header.  
+  $action_buttons = [  
+    '#theme' => 'links__action_links',  
+    '#links' => $links,  
+    '#attributes' => [  
+      'class' => ['action-links'],  
+    ],    
+    '#wrapper_element' => 'ul',  
+  ];  
+  $button_markup = \Drupal::service('renderer')->renderRoot($action_buttons);  
+  $variables['header']['area']['content']['custom_button'] = ['#markup' => $button_markup];  
+}
+```
+###### 区别总结
 
+- `hook_views_pre_render` 更多地关注于操作视图的数据和配置，而 `hook_preprocess_views_view` 更多地关注于改变视图模板的渲染输出。
+- `hook_views_pre_render` 在视图渲染过程中更早被调用，允许对数据进行更底层的修改；`hook_preprocess_views_view` 在视图即将渲染成HTML时被调用，关注于如何将数据展示给用户。
 #### `hook_token_info` & `hook_tokens`
 [[自定义 Token]]
