@@ -6,5 +6,7 @@
 - [ ] 字段类型 Entity Reference Revisions 和 Entity Reference 
 - [ ] 显示模式为Entity Reference Revisions 和 Entity Reference 的 view
 - [ ] Form API
-- [ ] SEO title 同一页面不同内容下
+- [x] SEO title 同一页面不同内容下
 - [x] form 容器
+- [ ] 台湾 AA导出配置，预注册 view header 导出配置
+- [ ] 台湾 Attendee form 修改
