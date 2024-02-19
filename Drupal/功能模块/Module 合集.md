@@ -148,3 +148,44 @@ Zoom level：缩放聚焦等级，0最小，世界地图；20最大，街道级�
 ## Token filter
 Token Filter 模块是Drupal的一个扩展模块，==它为文本字段和文本格式添加了一个额外的过滤器==。这个过滤器允许你在文本中使用代币（tokens），并在渲染内容时自动将这些代币替换为相应的值。
 参考：[[自定义 Token]]
+## Honeypot
+Honeypot模块是Drupal网站常用的一种防止垃圾邮件的解决方案。它通过在表单中添加隐藏字段来工作，这些字段对于正常用户是不可见的，但是会吸引自动化的垃圾邮件机器人去填写。当检测到这些隐藏字段被填写时，系统会认定该提交为垃圾邮件并阻止它。此外，Honeypot模块还可以利用时间戳来检测表单提交的速度，以此来判断是否为自动化工具的行为。
+推荐使用依赖注入：
+```php
+use Drupal\honeypot\HoneypotService;
+
+/**  
+ * Honeypot service. 
+ * 
+ * @var \Drupal\honeypot\HoneypotService  
+ */
+ protected HoneypotService $honeypotService;  
+  
+/**  
+ * {@inheritdoc}  
+ */
+ public function __construct(HoneypotService $honeypotService) {  
+  $this->honeypotService = $honeypotService;  
+}
+
+ public function buildForm(array $form, FormStateInterface $form_state) {
+  // .....
+  
+   $this->honeypotService->addFormProtection(  
+   $form,  
+   $form_state,  
+   ['honeypot', 'time_restriction']  
+ );  
+  return $form;
+}
+```
+==在pfizer的配置中，只针对匿名用户==，即查看网页源代码时，只有匿名用户才会有Honeypot相关信息。
+## Views Data Export
+Views Data Export模块是Drupal的一个非常实用的扩展，它允许您将通过Views模块创建的视图数据导出为多种文件格式，如CSV、Microsoft Excel、XML、文本文件等。这个功能在需要对站点数据进行分析、报告或者是迁移数据到其他系统时特别有用。
+###### 使用
+1. **创建视图：** 在Drupal后台，进入“结构”（Structure）> “视图”（Views）> “添加视图”（Add view）。创建一个新视图，选择要展示和导出的数据来源，例如您创建的“User Emails”内容类型。
+2. **配置视图格式：** 在视图设置中，您可以选择展示格式（比如表格），并添加需要展示的字段，例如“Email”和“Submission Date”。
+3. **添加导出功能：**
+    - 在视图编辑界面中，点击“添加显示”（Add display）按钮，选择“==Data Report==”。
+    - 配置导出设置，例如导出文件的格式（CSV、Microsoft XLS等）和文件名。
+    - 在导出显示设置中，您可以调整需要导出的字段和其他选项，如每次导出的最大行数。

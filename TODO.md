@@ -8,5 +8,7 @@
 - [ ] Form API
 - [x] SEO title 同一页面不同内容下
 - [x] form 容器
-- [ ] 台湾 AA导出配置，预注册 view header 导出配置
+- [x] 台湾 AA导出配置，预注册 view header 导出配置
 - [ ] 台湾 Attendee form 修改
+- [ ] drupal 10 获取当前时间戳
+- [ ] 不是要pfizer composer 包仓库
