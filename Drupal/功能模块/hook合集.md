@@ -36,68 +36,6 @@ function pfrpsg_preprocess_html(&$variables) {
 - `hook_views_query_alter` 用于修改实际的查询，包括条件、字段和排序，它影响最终生成的 SQL 查询。
 
 
-#### hook_theme_suggestions_HOOK_alter
-在Drupal中，`hook_theme_suggestions_HOOK_alter`和`hook_theme_suggestions_alter` 钩子用于动态地添加或更改Twig模板建议。
-这些钩子允许您根据某些条件（例如内容类型、角色、路径等）为不同的Drupal实体（如区块、页面、表单等）提供不同的模板文件。
-###### 简单示例：
-```php
-/**
- * Implements hook_theme_suggestions_HOOK_alter() for node templates.
- */
-function mymodule_theme_suggestions_node_alter(array &$suggestions, array $variables) {
-  $node = $variables['elements']['#node'];
-
-  if ($node->getType() == 'article') {
-    $suggestions[] = 'node__article__' . $node->id();
-  }
-}
-```
-在上面的代码中，我们实现了一个针对节点（node）的模板建议钩子。当节点的类型为“文章”（article）时，我们添加一个新的模板建议，该建议将仅适用于具有特定ID的文章节点。这意味着您可以创建一个针对具有特定ID的文章节点的自定义模板，例如：`node--article--1.html.twig`。
-
-==添加Form自定义模板==
-```php
-/**  
- * Implements hook_theme_suggestions_HOOK_alter() for form. 
- */
-function pfrpsg_theme_suggestions_form_alter(array &$suggestions, array $variables) {  
-  if (isset($variables['element']['#form_id'])) {  
-    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#form_id']);  
-  }
-}
-
-/**  
- * Implements template_theme_suggestions_alter(). 
- * 
- * Add form suggestions. 
- */
- function adpsg_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {  
-  if ($hook == 'form' && !empty($variables['element']['#id'])) {  
-    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);  
-  }
-}
-```
-使用`str_replace`函数将`#form_id`中的破折号（-）替换为下划线（\_），这是一个很好的做法.
-`hook_theme_suggestions_alter`更加通用，可以用于所有类型的实体。这给了更多的灵活性，但也可能需要更复杂的逻辑。
- ==自定义 Error Page==
-除了在CMS中配置，也可以使用 hook进行处理
-```php
-/**  
- * Implements hook_theme_suggestions_HOOK_alter(). 
- */
-function evthub_theme_suggestions_page_alter(array &$suggestions, array $variables) {  
-  $route_name = \Drupal::routeMatch()->getRouteName();  
-  switch ($route_name) {  
-    case 'system.401':  
-    case 'system.403':  
-    case 'system.404':  
-      // Unauthorized Access.  
-      $suggestions[] = 'page__error';  
-      break;  
-  }
-}
-```
-Drupal将尝试使用名为 `page--error.html.twig` 的模板文件来渲染这些错误页面，如果该模板存在的话。
-
 #### `hook_views_pre_render` & `hook_preprocess_views_view`
 ###### ==hook_views_pre_render==
 - **执行时机**：在视图渲染之前，但在查询执行并且结果集==已经被==视图插件处理之后执行。
@@ -182,5 +120,70 @@ function eventhub_register_preprocess_views_view(array &$variables) {
 
 - `hook_views_pre_render` 更多地关注于操作视图的数据和配置，而 `hook_preprocess_views_view` 更多地关注于改变视图模板的渲染输出。
 - `hook_views_pre_render` 在视图渲染过程中更早被调用，允许对数据进行更底层的修改；`hook_preprocess_views_view` 在视图即将渲染成HTML时被调用，关注于如何将数据展示给用户。
+#### hook_preprocess_views_view_field
+reference：[[Hook 修改视图字段显示]]
+#### hook_theme_suggestions_HOOK_alter
+在Drupal中，`hook_theme_suggestions_HOOK_alter`和`hook_theme_suggestions_alter` 钩子用于动态地添加或更改Twig模板建议。
+这些钩子允许您根据某些条件（例如内容类型、角色、路径等）为不同的Drupal实体（如区块、页面、表单等）提供不同的模板文件。
+###### 简单示例：
+```php
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for node templates.
+ */
+function mymodule_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  $node = $variables['elements']['#node'];
+
+  if ($node->getType() == 'article') {
+    $suggestions[] = 'node__article__' . $node->id();
+  }
+}
+```
+在上面的代码中，我们实现了一个针对节点（node）的模板建议钩子。当节点的类型为“文章”（article）时，我们添加一个新的模板建议，该建议将仅适用于具有特定ID的文章节点。这意味着您可以创建一个针对具有特定ID的文章节点的自定义模板，例如：`node--article--1.html.twig`。
+
+==添加Form自定义模板==
+```php
+/**  
+ * Implements hook_theme_suggestions_HOOK_alter() for form. 
+ */
+function pfrpsg_theme_suggestions_form_alter(array &$suggestions, array $variables) {  
+  if (isset($variables['element']['#form_id'])) {  
+    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#form_id']);  
+  }
+}
+
+/**  
+ * Implements template_theme_suggestions_alter(). 
+ * 
+ * Add form suggestions. 
+ */
+ function adpsg_theme_suggestions_alter(array &$suggestions, array $variables, $hook) {  
+  if ($hook == 'form' && !empty($variables['element']['#id'])) {  
+    $suggestions[] = 'form__' . str_replace('-', '_', $variables['element']['#id']);  
+  }
+}
+```
+使用`str_replace`函数将`#form_id`中的破折号（-）替换为下划线（\_），这是一个很好的做法.
+`hook_theme_suggestions_alter`更加通用，可以用于所有类型的实体。这给了更多的灵活性，但也可能需要更复杂的逻辑。
+ ==自定义 Error Page==
+除了在CMS中配置，也可以使用 hook进行处理
+```php
+/**  
+ * Implements hook_theme_suggestions_HOOK_alter(). 
+ */
+function evthub_theme_suggestions_page_alter(array &$suggestions, array $variables) {  
+  $route_name = \Drupal::routeMatch()->getRouteName();  
+  switch ($route_name) {  
+    case 'system.401':  
+    case 'system.403':  
+    case 'system.404':  
+      // Unauthorized Access.  
+      $suggestions[] = 'page__error';  
+      break;  
+  }
+}
+```
+Drupal将尝试使用名为 `page--error.html.twig` 的模板文件来渲染这些错误页面，如果该模板存在的话。
+
+
 #### `hook_token_info` & `hook_tokens`
 [[自定义 Token]]

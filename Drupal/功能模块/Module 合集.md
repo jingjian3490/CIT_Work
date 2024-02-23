@@ -168,10 +168,18 @@ use Drupal\honeypot\HoneypotService;
   $this->honeypotService = $honeypotService;  
 }
 
+/**  
+ * {@inheritdoc}  
+ */
+public static function create(ContainerInterface $container) {  
+  return new static(  
+    $container->get('honeypot')  
+  );}
+
  public function buildForm(array $form, FormStateInterface $form_state) {
   // .....
   
-   $this->honeypotService->addFormProtection(  
+ $this->honeypotService->addFormProtection(  
    $form,  
    $form_state,  
    ['honeypot', 'time_restriction']  
