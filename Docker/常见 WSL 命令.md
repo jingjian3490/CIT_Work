@@ -17,3 +17,8 @@ wsl --unregister 分发版名称
 ```sh
 wsl --set-default 分发版名称
 ```
+
+关闭指定的WSL实例
+```sh
+wsl --terminate Ubuntu-22.04
+```
