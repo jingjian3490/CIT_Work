@@ -1,54 +1,4 @@
-#### 流程
-
-```php
-1. 复制由测试提供的 Features 文件到 ../{profile}/features 目录下面  
-2. 在docroot 目录执行 composer gherphalizer 命令生成测试方法文件  
-3. 在 ../{profile}/test/src/functional/{profile}.php 文件里面编写单元测试  
-4. 在docroot目录下面执行该命令运行单元测试  ./vender/bin/phpunit 或者
-   ./source/docroot/vendor/phpunit/phpunit/phpunit --configuration /var/www/pfkpsg/source/docroot/phpunit.xml
-```
-前置：==把 phpunit.xml 文件放在 docroot 下面==
-```php
-IP是wsl里执行 ifconfig , eth0 的IP   mysql://{user}:{password}@{wsl_ip}/{databaase}
-执行 ifconfig 可能需要先安装：sudo apt install net-tools
-```
-![[Pasted image 20231115100349.png]]
-###### ==phpunit.xml==
-```XML
-<?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="./app/core/tests/bootstrap.php" colors="true"
-         beStrictAboutTestsThatDoNotTestAnything="true"
-         beStrictAboutOutputDuringTests="true"
-         beStrictAboutChangesToGlobalState="true"
-         printerClass="\Drupal\Tests\Listeners\HtmlOutputPrinter">
-    <php>
-        <ini name="error_reporting" value="32767"/>
-        <ini name="memory_limit" value="-1"/>
-        <env name="SIMPLETEST_BASE_URL" value="https://pfgancjp.ddev.site/"/>
-        <env name="SIMPLETEST_DB" value="mysql://db:db@db:3306/db"/>
-        <env name="BROWSERTEST_OUTPUT_DIRECTORY" value="app/sites/simpletest/browser_output"/>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="disabled"/>
-    </php>
-    <testsuites>
-        <testsuite name="site">
-            <directory>./app/profiles/ganclassjp_profile/tests/</directory>
-        </testsuite>
-    </testsuites>
-    <listeners>
-        <listener class="\Drupal\Tests\Listeners\DrupalListener">
-        </listener>
-        <!-- The Symfony deprecation listener has to come after the Drupal listener -->
-        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener">
-        </listener>
-    </listeners>
-</phpunit>
-```
-
-![[Pasted image 20231115100603.png]]
-![[Pasted image 20231115100628.png]]
-
-## ==具体方法==
+## ==功能测试具体方法==
 #### 关于断言元素存在
 ```php
 // 断言元素存在， id选择器
@@ -110,3 +60,4 @@ $this->assertEquals('Assess My Condition', $link_text);
 ```php
 $this->getSession()->setCookie('Cookie_key', 'Cookie_value');
 ```
+
