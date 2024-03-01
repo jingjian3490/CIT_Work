@@ -14,7 +14,6 @@ source /filename.sql;
 ```
 - ==同步文件==
 ```shell
-cd /var/www/projectKey
 scp -r caneg@172.21.2.211:/var/www/pfkpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
 ```
 - ==导出配置==
@@ -100,8 +99,8 @@ drush dcer taxonomy_term --folder=profiles/migrainefreesg_profile/content
 ```
 
 ```php
+// 根据 id 导出单个内容
 drush dcer file 166 --folder=profiles/migrainefreesg_profile/content
-
 ```
 ## ## Pfevtvn
 ```shell
