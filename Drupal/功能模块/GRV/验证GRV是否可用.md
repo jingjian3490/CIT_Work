@@ -7,7 +7,7 @@ additional_fqdns: ["eventspfizerprocoid-dev.pfizersite.io","eventspfizerprocoid-
 #### 2. 在后台 Pfizer GRV Nextgen Settings 中新增一条配置，按照配置文件填写即可，同时删除多余的配置  
 
 删除配置时，要保证删除后有一条，也就是说需要先新建再删除。（Event hub默认有一条之前的，新项目不知道）
-如果删除后没有就会导致报错。
+如果删除后没有就会导致==报错==。
 如何解决报错：1. 将setting.php中的$env改为dev     2. 将`setting.base.php`中读取key file文件目录的相关代码注释代码。
 
 对了，要保证 docroot 目录下有 .pfizer 文件夹，如果没有，去其他项目复制。

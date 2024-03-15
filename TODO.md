@@ -1,14 +1,11 @@
 - [ ] AWS S3 的使用
 - [ ] Drupal 批处理使用
-- [ ] 如果我在pre-registration名单，但我没有注册，直接扫码（产生attend date），然后在注册，然后再扫码，报错？
+- [x] 创建移动 pre-comment 文件快捷指令 Indonesia 还没搞
 
-- [ ] 整理一下之前国家每个Spring story的task
-- [ ] 字段类型 Entity Reference Revisions 和 Entity Reference 
-- [ ] 显示模式为Entity Reference Revisions 和 Entity Reference 的 view
-- [ ] Form API
-- [x] SEO title 同一页面不同内容下
-- [x] form 容器
-- [x] 台湾 AA导出配置，预注册 view header 导出配置
-- [ ] 台湾 Attendee form 修改
-- [ ] drupal 10 获取当前时间戳
-- [ ] 不是要pfizer composer 包仓库
+- [ ] 
+
+
+#### Physical event join flow
+1. If selected hidden button，by URL access will be 404，and hidden in list card. But can access by Deep link link
+2. If selected hidden button，and user email in pre-registion list，cane be access by URL and show in event list.
+3. If not selected hidden button, In-Person button will be display.

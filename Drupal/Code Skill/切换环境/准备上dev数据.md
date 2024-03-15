@@ -196,8 +196,22 @@ drush dcer file --folder=profiles/eventspfizerprotw_profile/content
   注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
 drush dcer taxonomy_term --folder=profiles/eventspfizerprotw_profile/content
 ```
-
+## Pfplmy
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfplmy/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
 ```
-1.zoom 参会流程，zoom原因导致不能参会，不知具体原因，不使用事务回滚
-2.zoom 迁移  dev、stage脚本 60秒
+- ==导出内容==
+```shell
+准备模块：default-content 和 default-content-extra，Database Sanitize
+
+drush dcer shortcut --folder=profiles/pfecpreventlahcommy_profile/content  
+drush dcer node --folder=profiles/pfecpreventlahcommy_profile/content  
+drush dcer block_content --folder=profiles/pfecpreventlahcommy_profile/content  
+drush dcer media --folder=profiles/pfecpreventlahcommy_profile/content  
+drush dcer menu_link_content --folder=profiles/pfecpreventlahcommy_profile/content  
+drush dcer user --folder=profiles/pfecpreventlahcommy_profile/content
+drush dcer file --folder=profiles/pfecpreventlahcommy_profile/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=profiles/pfecpreventlahcommy_profile/content
 ```
