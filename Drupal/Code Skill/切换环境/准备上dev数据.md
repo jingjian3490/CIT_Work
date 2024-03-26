@@ -215,3 +215,23 @@ drush dcer file --folder=profiles/pfecpreventlahcommy_profile/content
   注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
 drush dcer taxonomy_term --folder=profiles/pfecpreventlahcommy_profile/content
 ```
+
+## Pfadpag
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfadpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+- ==导出内容==
+```shell
+准备模块：default-content 和 default-content-extra，Database Sanitize
+
+drush dcer shortcut --folder=profiles/pfeccovid19oralrxphcomph_profile/content  
+drush dcer node --folder=profiles/pfeccovid19oralrxphcomph_profile/content  
+drush dcer block_content --folder=profiles/pfeccovid19oralrxphcomph_profile/content  
+drush dcer media --folder=profiles/pfeccovid19oralrxphcomph_profile/content  
+drush dcer menu_link_content --folder=profiles/pfeccovid19oralrxphcomph_profile/content  
+drush dcer user --folder=profiles/pfeccovid19oralrxphcomph_profile/content
+drush dcer file --folder=profiles/pfeccovid19oralrxphcomph_profile/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=profiles/pfeccovid19oralrxphcomph_profile/content
+```
