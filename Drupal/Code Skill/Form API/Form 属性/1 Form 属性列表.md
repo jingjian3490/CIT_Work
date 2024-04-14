@@ -1,0 +1,26 @@
+除了`type`属性，以下是一些常用的表单元素属性：
+
+- `#title`: 表单元素的标题，通常作为字段标签显示。
+- `#description`: 提供关于表单元素的额外信息或指示，通常显示在元素下方。
+- `#default_value`: 表单元素的默认值。
+- `#required`: 指定一个表单元素是否必填。
+- `#size`: 输入元素的大小，例如textfield的长度。
+- `#maxlength`: 输入元素可以接受的最大字符数。
+- `#options`: 对于选择类型的元素（如select，checkboxes，radios），提供可选项的数组。
+- `#attributes`: 一个包含属性的数组，这些属性会被添加到HTML元素上，如`class`或`style`。
+- `#element_validate`: 为表单元素指定一个或多个自定义验证函数。
+- `#value`: 在渲染表单时存储表单元素的值。
+- `#access`: 控制表单元素的访问权限，如果设置为FALSE，则在表单渲染时会完全隐藏该元素。
+- `#weight`: 控制表单元素的顺序，数值小的元素会排在前面。
+- `#states`: 用于定义表单元素状态的JavaScript API，如可见性、是否可编辑等。
+- `#prefix`: HTML标记或文本，会在渲染表单元素之前添加。
+- `#suffix`: HTML标记或文本，会在渲染表单元素之后添加。
+- `#multiple`: 对于可以选择多个值的元素（如select），允许选择多个选项。
+- `#ajax`: 定义AJAX行为，以便表单元素可以触发和响应无需重新加载页面的AJAX事件。
+- `#step`: 对于数字输入，定义用户可以选择的最小变化值。
+- `#min` 和 `#max`: 定义输入元素的最小和最大值。
+- `#field_prefix` 和 `#field_suffix`: 对于文本输入，提供在输入框内显示的前缀和后缀。
+- `#placeholder`: 提供输入框的占位符文本。
+- `#autocomplete_route_name`: 为文本字段定义自动完成路由。
+- `#disabled`: 如果设置为TRUE，则禁用表单元素，用户不能与之交互。
+- `#tree`: 当设置为TRUE时，表单值将以分层数组的形式返回，反映表单结构。

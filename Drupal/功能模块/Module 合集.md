@@ -197,3 +197,65 @@ Views Data Export模块是Drupal的一个非常实用的扩展，它允许您将
     - 在视图编辑界面中，点击“添加显示”（Add display）按钮，选择“==Data Report==”。
     - 配置导出设置，例如导出文件的格式（CSV、Microsoft XLS等）和文件名。
     - 在导出显示设置中，您可以调整需要导出的字段和其他选项，如每次导出的最大行数。
+
+## Profiles
+与用户账户字段的比较
+为什么使用个人资料而不是用户账户字段？
+
+使用个人资料模块时，用户账户设置和用户个人资料在概念上是不同的，例如启用了“个人资料”模块后，用户会得到两个单独的菜单链接：“我的账户”和“我的个人资料”。 
+
+个人资料允许创建多个个人资料类型，这些类型可以通过权限分配给角色（例如，一个通用的个人资料加上一个客户个人资料）。
+个人资料支持私有个人资料字段，这些字段只对个人资料的所有者和管理员显示。 
+
+功能 
+可以通过用户界面创建多个个人资料类型（例如，一个通用的个人资料加上一个客户个人资料），同时模块为这些个人资料提供了分离的权限。 
+可选地，个人资料表单在用户账户注册时显示。 
+字段可以配置为私有——因此只对个人资料的所有者和管理员可见。 
+个人资料类型显示在用户查看页面上，并且可以通过账户设置中的“管理显示”进行配置。 
+个人资料可以选择性地进行修订。
+#### ==About==
+就是创建了 Profiles 实体，然后将 User id 与 Profiles 实体关联，不同的 Profile type 是profile 实体的不同 bundle 。
+
+通过 uid 和 profile type id就可以获取到该 User 的一个唯一的 profile （对于该 profile type）：
+```php
+  public function loadByUser(AccountInterface $account, $profile_type_id) {
+    $query = $this->getQuery();
+    $query
+      ->condition('uid', $account->id())
+      ->condition('type', $profile_type_id)
+      ->condition('status', TRUE)
+      ->sort('is_default', 'DESC')
+      ->sort('profile_id', 'DESC')
+      ->range(0, 1);
+    $result = $query->accessCheck(FALSE)->execute();
+
+    return $result ? $this->load(reset($result)) : NULL;
+  }
+```
+
+也就是说 profile 对 User 是没有侵入的，而是创建 profile 实体的时候必须要 User id：
+```php
+  public function saveProfile(UserInterface $user, array $data, 
+  array $field_mapping = []): ?ProfileInterface 
+  {
+    $profile = $this->getProfile($user);
+
+    if (!$profile) {
+      $profile = Profile::create([
+        'uid' => $user->id(),
+        'type' => PROFILE_COORDINATOR_ID,
+        'status' => TRUE,
+      ]);
+    }
+
+    foreach ($data as $field => $value) {
+      if ($profile->hasField($field) && $value) {
+        $profile->set($field, $value);
+      }
+    }
+
+    $profile->save();
+
+    return $profile;
+  }
+```
