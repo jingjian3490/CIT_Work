@@ -17,6 +17,16 @@ scp -r caneg@172.21.2.211:/var/www/pfkpsg/source/docroot/app/sites/default/files
 注意更改项目名称，密码为锁屏密码
 
 ```
+
+ddev 发邮件
+```PHP
+// Override drupal/symfony_mailer default config to use Mailpit
+$config['symfony_mailer_lite.symfony_mailer_lite_transport.smtp']['plugin'] = 'smtp';
+$config['symfony_mailer_lite.symfony_mailer_lite_transport.smtp']['configuration']['user']='';
+$config['symfony_mailer_lite.symfony_mailer_lite_transport.smtp']['configuration']['pass']='';
+$config['symfony_mailer_lite.symfony_mailer_lite_transport.smtp']['configuration']['host']='localhost';
+$config['symfony_mailer_lite.symfony_mailer_lite_transport.smtp']['configuration']['port']='1025';
+```
 ## QQ邮箱SMTP授权码
 ```
 2054463918@qq.com
