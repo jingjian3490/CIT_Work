@@ -45,10 +45,12 @@ $author_name = $node->uid->entity->uid->value;
 // 1. `$profilee->uid`访问了`uid`字段（假设`uid`是实体上的用户引用字段）。
 // 2. `->entity`获取了该字段引用的用户实体对象。
 // 3. `->id()`方法从该用户实体对象中获取了用户ID（UID）。
-$author_name = $node->uid->entity->id();
+
+$author_name = $node->uid->entity->id();   // 清晰并且面向对象,推荐
 // 对于实体引用字段，还能这样获取引用实体的id
-$uid = $profilee->uid->target_id;   // 清晰并且面向对象,推荐
-$uid = $profilee->uid->getValue()[0]['target_id']; // 简洁且效率高
+$uid = $profilee->uid->target_id;   // 简洁且效率高
+
+$uid = $profilee->uid->getValue()[0]['target_id'];
 
 $user = \Drupal::entityTypeManager()->getStorage('user')->load($uid);
 $username = $user->getUsername(); // getUsername 是 User 类自己实现的方法
