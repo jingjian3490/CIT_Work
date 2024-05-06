@@ -12,3 +12,8 @@ wildcard                       n.    通配符
 prompt                         v.   n.   adj.   adv.           促使，鼓励，提示       及时的
 distribution                  v. 分发
 contribution                 v.贡献，捐款
+represent                      v.代表       /ˌreprɪˈzent/
+consistent                     adj.持续的，一致的         _/kənˈsɪstənt_/
+verious                          adj.各种各样，千差万别      /ˈveəriəs/
+essentially                      /ɪˈsenʃəli/   adv. 本质上，根本上；
+throughout                  - _/_θruːˈaʊt_/_        prep. 遍及，到处；自始至终，贯穿整个时期
