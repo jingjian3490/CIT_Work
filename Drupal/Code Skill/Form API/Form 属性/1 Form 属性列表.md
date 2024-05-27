@@ -8,6 +8,7 @@
 - `#maxlength`: 输入元素可以接受的最大字符数。
 - `#options`: 对于选择类型的元素（如select，checkboxes，radios），提供可选项的数组。
 - `#attributes`: 一个包含属性的数组，这些属性会被添加到HTML元素上，如`class`或`style`。
+- `label_attributes`：可以为表单元素添加 class，对 radios 没用。[[label_attributes and form-required & Radios]]
 - `#element_validate`: 为表单元素指定一个或多个自定义验证函数。
 - `#value`: 在渲染表单时存储表单元素的值。
 - `#access`: 控制表单元素的访问权限，如果设置为FALSE，则在表单渲染时会完全隐藏该元素。

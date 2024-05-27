@@ -255,7 +255,7 @@ Manage List==
 2. 多出了一个 `Proximity Form Field (location)` 字段
 ![[Pasted image 20231004101635.png]]
 
-###### ==探索对字段的修改==  `自定义视图字段处理程序` [[自定义视图字段处理程序]]
+###### ==探索对字段的修改==  `自定义视图字段处理程序` [[为实体添加视图字段处理程序]]
 通过对比，初步判断是为了添加HTML属性，字段被修改后有了HTML属性
 ![[Pasted image 20231004102409.png]]
 如何对view的数据进行修改？先到 .module 文件看看，发现hook：pfadpsg_hospital_views_data_alter
