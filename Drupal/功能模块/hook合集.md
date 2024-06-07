@@ -296,7 +296,7 @@ function mymodule_entity_load(array $entities, $entity_type) {
 
 在这种场景下，系统需要能够根据用户当前选择的工作区加载特定的内容修订版本，而不是总是加载最新的或默认的修订版本。这里，`hook_entity_preload` 就非常有用。
 
-### 示例实现：
+##### 示例实现：
 
 ```php
 /**
@@ -331,3 +331,75 @@ function mymodule_get_workspace_revision($entity, $workspace) {
 在这个示例中，`hook_entity_preload` 用于在实体加载前，检查并替换成对应工作区中的修订版本。这样做可以确保系统根据当前工作区的上下文返回正确的数据，同时避免在实体加载之后进行不必要的再查询或数据替换，从而优化性能。
 
 这种方法在处理需要根据用户会话或其他动态上下文显示不同数据版本的应用程序时非常有用。它特别适用于复杂的内容管理系统、多版本控制系统以及需要高度定制化加载逻辑的企业级应用。
+#### `hook_ajax_render_alter`
+##### Case Pfrpsg
+View Block 暴露过滤器给用户，`ajax` 更新数据。发现ajax 有一个 `scrollTop` 命令，导致每次搜索后页面会滚动到顶部，但需求上不需要，所以要把这个命令去除。
+
+```PHP
+/**
+ * Implements hook_ajax_render_alter().
+ */
+function pfrpsg_hospital_ajax_render_alter(array &$data) {
+
+  if (!$data[0]['settings']['ajaxTrustedUrl']['/admin/hospital/list']) {
+    return;
+  }
+  foreach ($data as $key => $command) {
+    if ($command['command'] === 'scrollTop') {
+      unset($data[$key]);
+      break;
+    }
+  }
+}
+```
+##### Overview
+`hook_ajax_render_alter` 是一个Drupal中的钩子（hook），允许开发者在Ajax响应渲染之前对其进行修改。这个钩子在生成Ajax响应的最终输出之前被调用，可以用于==修改或添加数据到Ajax响应==中。
+###### 函数定义
+```php
+/**
+ * Implements hook_ajax_render_alter().
+ *
+ * @param array $commands
+ *   An associative array containing the Ajax commands to be rendered.
+ */
+function mymodule_ajax_render_alter(array &$commands) {
+  // 修改或添加Ajax命令到$commands数组中
+}
+```
+###### 参数
+- **$commands**: 一个关联数组，==包含将要渲染的Ajax命令==。这些命令用于指导客户端如何更新页面内容。
+###### 使用场景
+`hook_ajax_render_alter` 可以用于以下场景：
+1. **添加自定义Ajax命令**：在默认的Ajax命令之外添加自定义命令，以实现特殊的前端行为。
+2. **修改现有Ajax命令**：修改现有的命令参数，例如修改选择器或传递的数据。
+3. **调试或日志记录**：在Ajax响应发送之前记录或调试响应内容。
+###### 示例
+假设我们有一个模块 `mymodule`，我们希望在每个Ajax响应中添加一个自定义的消息命令：
+
+```php
+/**
+ * Implements hook_ajax_render_alter().
+ */
+function mymodule_ajax_render_alter(array &$commands) {
+  // 自定义消息命令
+  $custom_command = [
+    'command' => 'insert',
+    'method' => 'append',
+    'selector' => 'body',
+    'data' => '<div class="custom-message">This is a custom message added by mymodule.</div>',
+  ];
+
+  // 将自定义命令添加到命令数组的末尾
+  $commands[] = $custom_command;
+}
+```
+
+在这个例子中，我们定义了一个自定义的Ajax命令，使用 `insert` 命令将自定义消息插入到页面的 `<body>` 标签内。这个自定义命令被添加到 `$commands` 数组中，因此它会在现有的Ajax命令之后执行。
+
+###### 注意事项
+- **性能影响**：频繁地修改Ajax响应可能会影响性能，应尽量避免在高频请求中进行复杂的操作。
+- **安全性**：确保任何添加到Ajax响应中的数据都是安全和可信的，以防止跨站脚本（XSS）攻击。
+
+通过 `hook_ajax_render_alter`，开发者可以灵活地控制Drupal中Ajax请求的响应内容，从而实现更丰富和动态的用户体验。
+#### ==hook_update_N==
+[[hook_update_N]]

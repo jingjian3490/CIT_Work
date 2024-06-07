@@ -275,9 +275,6 @@ drush dcer file --folder=profiles/psiasiadummycom_profile/content
   注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
 drush dcer taxonomy_term --folder=profiles/psiasiadummycom_profile/content
 ```
-
-
-
 ## mastercard
 - ==同步文件==
 ```shell
@@ -296,5 +293,19 @@ drush dcer user --folder=profiles/pfizerflexau_profile/content
 drush dcer file --folder=profiles/pfizerflexau_profile/content
   注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
 drush dcer taxonomy_term --folder=profiles/pfizerflexau_profile/content
+```
+
+## Drupal Learn
+- ==导出内容==
+```shell
+drush dcer shortcut --folder=../config/content  
+drush dcer node --folder=../config/content  
+drush dcer block_content --folder=../config/content  
+drush dcer media --folder=../config/content
+drush dcer menu_link_content --folder=../config/content 
+drush dcer user --folder=../config/content
+drush dcer file --folder=../config/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=../config/content
 ```
 
