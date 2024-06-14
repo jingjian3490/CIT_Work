@@ -16,5 +16,9 @@ represent                      v.代表       /ˌreprɪˈzent/
 consistent                     adj.持续的，一致的         _/kənˈsɪstənt_/
 verious                          adj.各种各样，千差万别      /ˈveəriəs/
 essentially                      /ɪˈsenʃəli/   adv. 本质上，根本上；
-throughout                  - _/_θruːˈaʊt_/_        prep. 遍及，到处；自始至终，贯穿整个时期
+throughout                  /θruːˈaʊt/       prep. 遍及，到处；自始至终，贯穿整个时期
 Overview                      n. v.                            概述
+semaphore                   /ˈseməfɔː(r)/    - n. 信号标，旗语；臂板信号装置    - v. 打旗语，发信号
+flood                             /flʌd/  - v. （使）淹没；泛滥；   - n. 洪水，水灾；大批，大量  
+batch                           /bætʃ/ - n. 一批      - v. 分批处理
+queue                          /kjuː/   - n. 行列；长列，长队；- v. 排队
