@@ -279,6 +279,11 @@ drush dcer taxonomy_term --folder=profiles/psiasiadummycom_profile/content
 - ==同步文件==
 ```shell
 scp -r caneg@172.21.1.96:/var/www/mastercard/source/docroot/sites/default/files ./source/docroot/sites/default/
+
+
+scp -r caneg@172.21.1.96:/var/www/mastercard/source/docroot/sites/default/files/2024-03/2023.11-mb.png /var/www/mastercard/source/docroot/sites/default/files/2024-03/2023.11-mb.png 
+
+
 ```
 - ==导出内容==
 ```shell
