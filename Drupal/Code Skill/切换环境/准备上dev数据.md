@@ -216,7 +216,7 @@ drush dcer file --folder=profiles/pfecpreventlahcommy_profile/content
 drush dcer taxonomy_term --folder=profiles/pfecpreventlahcommy_profile/content
 ```
 
-## Pfadpag
+## 2404 Pfadpag
 - ==同步文件==
 ```shell
 scp -r caneg@172.21.2.211:/var/www/pfadpsg/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
