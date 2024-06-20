@@ -25,3 +25,4 @@ queue                          /kjuː/   - n. 行列；长列，长队；- v. �
 prompt                         /prɒmpt/ v. 促使，提示;    n. 提示；adj. 迅速的
 canonical                      /kəˈnɒnɪk(ə)l/  adj. 准确的，权威的；公认的，最简洁的；
 dynamic                       /daɪˈnæmɪk/     - adj. 充满活力的，动态的，发展变化的；- n. 动力，活力；动态；动力学
+numeric                       /njuːˈmerɪk/     - adj. 数值的；数字的（等于 numerical）   - n. 数；数字
