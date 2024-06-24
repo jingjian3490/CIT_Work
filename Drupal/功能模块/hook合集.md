@@ -124,6 +124,7 @@ function eventhub_register_preprocess_views_view(array &$variables) {
 - `hook_views_pre_render` 在视图渲染过程中更早被调用，允许对数据进行更底层的修改；`hook_preprocess_views_view` 在视图即将渲染成HTML时被调用，关注于如何将数据展示给用户。
 
 #### ==hook_theme_suggestions_HOOK_alter== & ==hook_theme_suggestions_alter==
+![[Pasted image 20240624105749.png]]
 在Drupal中，`hook_theme_suggestions_HOOK_alter`和`hook_theme_suggestions_alter` 钩子用于动态地添加或更改Twig模板建议。
 这些钩子允许您根据某些条件（例如内容类型、角色、路径等）为不同的Drupal实体（如区块、页面、表单等）提供不同的模板文件。
 ###### 简单示例：
