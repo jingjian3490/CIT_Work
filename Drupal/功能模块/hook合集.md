@@ -186,7 +186,20 @@ function evthub_theme_suggestions_page_alter(array &$suggestions, array $variabl
 ```
 Drupal将尝试使用名为 `page--error.html.twig` 的模板文件来渲染这些错误页面，如果该模板存在的话。
 
+##### ==区别总结==
 
+- **`hook_theme_suggestions_HOOK`**：
+    - 用于为特定主题挂钩添加新的主题建议。
+    - 在生成特定主题挂钩的主题建议时触发。
+    - 主要用于提供额外的模板建议。
+     作用都差不多，他们的参数不一样，这个 HOOK 需要返回  `$suggestions[]` 数组，另一个不用。
+     自定义实体初始化 模板建议的时候可以用这个 HOOK。参数没填对会报错！
+- **`hook_theme_suggestions_HOOK_alter`**：
+    - 用于修改现有的主题建议。
+    - 在所有主题建议生成之后触发。
+    - 主要用于修改、添加或删除已生成的主题建议。
+
+https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Render%21theme.api.php/function/hook_theme_suggestions_HOOK_alter/10
 #### `hook_token_info` & `hook_tokens`
 [[自定义 Token]]
 #### `hook_entity_load` & `hook_ENTITY_TYPE_load`
