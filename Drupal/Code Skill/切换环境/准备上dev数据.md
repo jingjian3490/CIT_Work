@@ -36,7 +36,7 @@ drush dcer taxonomy_term --folder=profiles/edisonknowpneumoniasg_profile/content
 ```
 - ==测试==
 ```shell
-drush site:install -y
+drush site:install -y NHY^7ujm,ki8
 ```
 - ==导出数据库==
 ```shell
