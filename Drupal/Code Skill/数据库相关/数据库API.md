@@ -101,10 +101,20 @@ return $result->fetchField();
 ```php
 // Example of a SELECT query which joins the {node} table to both the {node_field_data} and {users} tables.
 $query = $connection->select('node', 'n', $options);
-$query->join('node_field_data', 'nfd', 'n.nid = nfd.nid AND nfd.status = :status', array(':status' => 1));
-$table_alias = $query->join('users', 'u', 'n.uid = u.uid AND u.uid = :uid', array(':uid' => 5));
+$query->join('node_field_data', 
+			 'nfd', 
+			 'n.nid = nfd.nid AND nfd.status = :status', 
+			 array(':status' => 1)
+			 );
+$table_alias = $query->join('users', 
+							'u', 
+							'n.uid = u.uid AND u.uid = :uid', 
+							array(':uid' => 5)
+							);
 ```
-上面的指令将针对“user”表添加一个INNER JOIN（默认连接类型），该表将获得别名“u”。连接将在条件 “n.uid = u.uid AND u.uid = ：uid” 时打开，其中 ：uid 的值为 5。请注意使用预准备语句片段。这允许以安全的方式添加变量连接语句。==切勿==将文本值或变量直接放入查询片段中，就像永远不要将文本和变量直接放入静态查询中一样（它们可能导致 SQL 注入漏洞）。
+上面的指令将针对“user”表添加一个INNER JOIN（默认连接类型），该表将获得别名“u”。
+连接将在条件 “n.uid = u.uid AND u.uid = ：uid” 时打开，其中 ：uid 的值为 5。
+请注意使用预准备语句片段。这允许以安全的方式添加变量连接语句。==切勿==将文本值或变量直接放入查询片段中，就像永远不要将文本和变量直接放入静态查询中一样（它们可能导致 SQL 注入漏洞）。
 
 右加入在Drupal 9.0.0中删除
 
