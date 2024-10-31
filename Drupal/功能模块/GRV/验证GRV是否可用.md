@@ -13,7 +13,7 @@ additional_fqdns: ["eventspfizerprocoid-dev.pfizersite.io","eventspfizerprocoid-
 对了，要保证 docroot 目录下有 .pfizer 文件夹，如果没有，去其他项目复制。
 #### 3. 加密 GRV 配置中的 client_id 和 client_secret 参数，并将每个环境（dev & stage & prod） 加密后的值替换到 .pfizer/keys 目录下的 pfizer_grv_nextgen_client.key 文件中 
 
-如何加密：在 `setting.base.php` 文件中输入下面代码并替换client_id 和 client_secret，然后执行 drush cr 就会输出加密后的密文。
+==如何加密==：在 `setting.base.php` 文件中输入下面代码并替换client_id 和 client_secret，然后执行 drush cr 就会输出加密后的密文。
 ```php
 $a = [
   'client_id' => '65df0f679be5d',

@@ -19,7 +19,7 @@ git update-index --no-assume-unchanged 文件路径
 - 这个方法适用于==临时的更改忽略==，如果文件经常变动，最好寻找其他解决方案。
 
 ### 缺点
-在Git中，`git update-index --assume-unchanged` 命令确实可以用来告诉 Git 忽略对文件的改动，这意味着 Git 将不会提示您提交这些改动，也不会在执行其他操作（如`git status`）时显示这些文件。然而，这==并不意味着这些文件在操作==（如`git checkout .` 或 `git reset --hard`）时不会被覆盖。`git checkout .` 命令会重置工作目录中所有文件到它们在最后一次提交时的状态，包括那些被标记为`assume-unchanged`的文件。
+在Git中，`git update-index --assume-unchanged` 命令确实可以用来告诉 Git 忽略对文件的改动，这意味着 Git 将不会提示您提交这些改动，也不会在执行其他操作（如`git status`）时显示这些文件。然而，这==并不意味着这些文件在操作==（如`git checkout .` 或 `git reset --hard`）时不会被覆盖。`git checkout .` ==**命令会重置工作目录中所有文件到它们在最后一次提交时的状态，包括那些被标记为`assume-unchanged`的文件。**==
 
 因此引入==skip-worktre==e命令 [[-- skip-worktree 处理配置文件]]
 ## 最佳实践：本地配置覆盖
