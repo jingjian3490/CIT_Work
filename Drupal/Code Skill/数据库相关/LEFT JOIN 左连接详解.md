@@ -1,3 +1,4 @@
+在==连接查询==中, 只要存在一对多关系,  就会出现 "==重复数据=="
 #### 在 SELECT 语句后有两个表
 左连接（LEFT JOIN）操作在SQL查询中用于从两个表中合并数据，保留左表（LEFT JOIN左侧的表）的所有记录，即使右表中没有匹配的记录。如果右表中有与左表匹配的记录，则这些记录会被包括在查询结果中。如果右表中没有匹配的记录，则查询结果中这部分将以NULL填充。
 以下是一个简化的例子来动态说明左连接（LEFT JOIN）的影响：
@@ -34,7 +35,7 @@ LEFT JOIN departments ON employees.DepartmentID = departments.DepartmentID;
 
 这个例子展示了左连接如何保证左表（`employees`）的所有记录都会出现在结果集中，即使在右表（`departments`）中没有找到匹配的记录。这对于需要展示所有主表记录，同时尝试匹配外键表记录的情况非常有用，即使有些主表记录在外键表中没有匹配项也不会被排除掉。
 
-#### 在 SELECT 语句后只有一个表
+# 在 SELECT 语句后只有一个表
 如果在`SELECT`语句部分只包含`employees.EmployeeName`而不包含`departments.DepartmentName`，那么查询的结果将只展示`employees`表中的`EmployeeName`字段，而不会显示他们所属部门的名称。即使使用了左连接（LEFT JOIN）来连接`departments`表，由于`departments.DepartmentName`没有被包含在`SELECT`语句中，部门名称不会出现在最终的查询结果中。
 以前面的例子为基础，如果查询如下所示：
 ```sql
