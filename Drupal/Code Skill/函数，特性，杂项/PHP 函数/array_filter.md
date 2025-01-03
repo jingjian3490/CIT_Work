@@ -1,4 +1,5 @@
-`array_filter` 用于过滤数组中的元素。它==通过回调函数对每个元素进行测试，并返回一个包含所有通过测试的元素的新数组==。
+`array_filter` ==使用回调函数过滤数组的元素==, 不传递回调函数时。将删除数组中的所有==“空”元素==。
+
 ### 函数定义
 
 ```php
@@ -19,33 +20,6 @@ array_filter(array $array, ?callable $callback = null, int $mode = 0): array
    - `ARRAY_FILTER_USE_BOTH`：同时传递键和值。
 ### 返回值
 - 返回一个包含所有通过回调函数测试的元素的新数组。==键名会被保留==。
-### 示例
-
-#### 示例 1：使用回调函数
-
-```php
-$numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-// 过滤出所有偶数
-$even_numbers = array_filter($numbers, function($number) {
-    return $number % 2 === 0;
-});
-
-print_r($even_numbers);
-```
-
-输出：
-
-```php
-Array
-(
-    [1] => 2
-    [3] => 4
-    [5] => 6
-    [7] => 8
-    [9] => 10
-)
-```
 
 #### 示例 2：==没有回调函数==
 

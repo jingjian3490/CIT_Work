@@ -78,6 +78,25 @@ $settings['trusted_host_patterns'] = [
 ```
 
 ----------------------------------
+## 2301 Pfsaha
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfsaha/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+- ==导出内容==
+```shell
+准备模块：default-content 和 default-content-extra，Database Sanitize
+
+drush dcer shortcut --folder=profiles/pfecsahabatpedulcoid_profile/content  
+drush dcer node --folder=profiles/pfecsahabatpedulcoid_profile/content  
+drush dcer block_content --folder=profiles/pfecsahabatpedulcoid_profile/content  
+drush dcer media --folder=profiles/pfecsahabatpedulcoid_profile/content  
+drush dcer menu_link_content --folder=profiles/pfecsahabatpedulcoid_profile/content  
+drush dcer user --folder=profiles/pfecsahabatpedulcoid_profile/content
+drush dcer file --folder=profiles/pfecsahabatpedulcoid_profile/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=profiles/pfecsahabatpedulcoid_profile/content
+```
 ## 2303Pfemasia
 - ==同步文件==
 ```shell
@@ -126,7 +145,7 @@ drush dcer taxonomy_term --folder=profiles/migrainefreesg_profile/content
 // 根据 id 导出单个内容
 drush dcer file 166 --folder=profiles/migrainefreesg_profile/content
 ```
-## ## Pfevtvn
+## Pfevtvn
 ```shell
 准备模块：default-content 和 default-content-extra，Database Sanitize
 
@@ -280,7 +299,7 @@ drush dcer file --folder=profiles/psiasiadummycom_profile/content
 drush dcer taxonomy_term --folder=profiles/psiasiadummycom_profile/content
 ```
 
-## fpspau
+## Pfpspau
 - ==同步文件==
 ```shell
 scp -r caneg@172.21.2.211:/var/www/pfpspau/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
@@ -338,3 +357,27 @@ drush dcer file --folder=../config/content
 drush dcer taxonomy_term --folder=../config/content
 ```
 
+## 2407 Pfgpcjp
+- ==同步文件==
+```shell
+scp -r caneg@172.21.2.211:/var/www/pfgpcjp/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+- ==导出内容==
+```shell
+准备模块：default-content 和 default-content-extra，Database Sanitize
+
+drush dcer shortcut --folder=profiles/riumachijp_profile/content  
+drush dcer node --folder=profiles/riumachijp_profile/content  
+drush dcer block_content --folder=profiles/riumachijp_profile/content  
+drush dcer media --folder=profiles/riumachijp_profile/content  
+drush dcer menu_link_content --folder=profiles/riumachijp_profile/content  
+drush dcer user --folder=profiles/riumachijp_profile/content
+drush dcer file --folder=profiles/riumachijp_profile/content
+  注意文件名不能有空格，若运行命令报错文件不存在，运行cron清除临时文件
+drush dcer taxonomy_term --folder=profiles/riumachijp_profile/content
+```
+
+2408 
+```
+scp -r caneg@172.21.1.96:/var/www/gcmmit/source/docroot/sites/default/files ./source/docroot/sites/default/
+```
