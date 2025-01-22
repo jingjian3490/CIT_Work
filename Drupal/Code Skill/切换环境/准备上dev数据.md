@@ -377,7 +377,9 @@ drush dcer file --folder=profiles/riumachijp_profile/content
 drush dcer taxonomy_term --folder=profiles/riumachijp_profile/content
 ```
 
-2408 
+## 2408 Gcmmit
 ```
 scp -r caneg@172.21.1.96:/var/www/gcmmit/source/docroot/sites/default/files ./source/docroot/sites/default/
+
+scp -r  ./source/docroot/sites/default/default/files/media-icons caneg@172.21.1.96:/var/www/gcmmit/source/docroot/sites/default/files/media-icons
 ```
