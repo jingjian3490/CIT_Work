@@ -383,3 +383,8 @@ scp -r caneg@172.21.1.96:/var/www/gcmmit/source/docroot/sites/default/files ./so
 
 scp -r  ./source/docroot/sites/default/default/files/media-icons caneg@172.21.1.96:/var/www/gcmmit/source/docroot/sites/default/files/media-icons
 ```
+
+
+```
+scp -r caneg@172.21.2.96:/var/www/legrand-cn/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
