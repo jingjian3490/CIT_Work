@@ -386,5 +386,18 @@ scp -r  ./source/docroot/sites/default/default/files/media-icons caneg@172.21.1.
 
 
 ```
-scp -r caneg@172.21.2.96:/var/www/legrand-cn/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+scp -r caneg@172.21.2.96:/var/www/mastercard/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+
+```
+scp -r caneg@172.21.2.211:/var/www/pfemasia/source/docroot/app/sites/default/files ./source/docroot/app/sites/default/
+```
+
+
+```
+scp -r ./ root@14.103.233.13:/var/www/pfrpsg
+```
+
+```
+scp -r root@14.103.233.13:/var/kaiyuan/globalSpeed/build ./
 ```
